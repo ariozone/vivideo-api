@@ -10,4 +10,5 @@ app.get('/api/genres', (req, res) => {
   res.send(genres)
 })
 
-app.listen(3000, () => console.log(`Listening on port 3000...`))
+const port = process.env.PORT || 3000
+app.listen(port, () => console.log(`Listening on port ${port}...`))
