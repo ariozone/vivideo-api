@@ -2,7 +2,6 @@ const express = require("express")
 const app = express()
 app.use(express.json())
 
-
 const genres = [
   { id: 1, name: "Action" },
   { id: 2, name: "Comedy" },
@@ -25,7 +24,8 @@ app.post("/api/genres", (req, res) => {
     id: genres.length + 1,
     name: req.body.name
   }
-res.send(genre)
+  genres.push(genre)
+  res.send(genre)
 })
 
 const port = process.env.PORT || 3000
