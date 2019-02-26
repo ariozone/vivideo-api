@@ -1,19 +1,31 @@
-const express = require('express')
+const express = require("express")
 const app = express()
+app.use(express.json())
+
 
 const genres = [
-  {id: 1, name: 'Action'},
-  {id: 2, name: 'Comedy'},
-  {id: 3, name: 'Thriller'}
+  { id: 1, name: "Action" },
+  { id: 2, name: "Comedy" },
+  { id: 3, name: "Thriller" }
 ]
-app.get('/api/genres', (req, res) => {
+
+app.get("/api/genres", (req, res) => {
   res.send(genres)
 })
 
-app.get('/api/genres/:id', (req, res) => {
+app.get("/api/genres/:id", (req, res) => {
   const genre = genres.find(g => g.id === parseInt(req.params.id))
-  !genre ? res.status(404).send('Genre with the given ID does not exist.') :
-  res.send(genre.name)
+  !genre
+    ? res.status(404).send("Genre with the given ID does not exist.")
+    : res.send(genre.name)
+})
+
+app.post("/api/genres", (req, res) => {
+  const genre = {
+    id: genres.length + 1,
+    name: req.body.name
+  }
+res.send(genre)
 })
 
 const port = process.env.PORT || 3000
