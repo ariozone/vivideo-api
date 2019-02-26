@@ -22,10 +22,8 @@ app.get("/api/genres/:id", (req, res) => {
 })
 
 app.post("/api/genres", (req, res) => {
-  const schema = {
-    name: Joi.string().min(3).required()
-  }
-  const result = Joi.validate(req.body, schema)
+
+  const result = validateGenre(req.body)
   if(result.error) return res.status(400).send(result.error.details[0].message)
   const genre = {
     id: genres.length + 1,
@@ -36,14 +34,12 @@ app.post("/api/genres", (req, res) => {
 })
 
 app.put('/api/genres/:id', (req, res) => {
-  const schema = {
-    name: Joi.string().min(3).required()
-  }
+
   let result = ""
   const genre = genres.find(g => g.id === parseInt(req.params.id))
   !genre
   ? res.status(404).send("Genre with the given ID does not exist.")
-  : result = Joi.validate(req.body, schema)
+  : result = validateGenre(req.body)
   if (result.error) return res.status(400).send(result.error.details[0].message)
 
   genre.name = req.body.name
