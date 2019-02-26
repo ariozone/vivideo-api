@@ -35,5 +35,23 @@ app.post("/api/genres", (req, res) => {
   res.send(genre)
 })
 
+app.put('/api/genres/:id', (req, res) => {
+  const schema = {
+    name: Joi.string().min(3).required()
+  }
+  let result = ""
+  const genre = genres.find(g => g.id === parseInt(req.params.id))
+  !genre
+  ? res.status(404).send("Genre with the given ID does not exist.")
+  : result = Joi.validate(req.body, schema)
+  if (result.error) return res.status(400).send(result.error.details[0].message)
+
+  genre.name = req.body.name
+  res.send(genre)
+
+})
+
+
+
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Listening on port ${port}...`))
