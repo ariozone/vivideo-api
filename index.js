@@ -11,6 +11,8 @@ const genres = [
 ]
 
 app.get("/api/genres", (req, res) => {
+  // to read query string parameters(for example: ?sortBy=name)
+  // const sortBy = req.query.sortBy
   res.send(genres)
 })
 
@@ -23,8 +25,9 @@ app.get("/api/genres/:id", (req, res) => {
 
 app.post("/api/genres", (req, res) => {
 
-  const {error }= validateGenre(req.body)
+  const {error} = validateGenre(req.body)
   if(error) return res.status(400).send(error.details[0].message)
+
   const genre = {
     id: genres.length + 1,
     name: req.body.name
@@ -34,10 +37,9 @@ app.post("/api/genres", (req, res) => {
 })
 
 app.put('/api/genres/:id', (req, res) => {
-
   const genre = genres.find(g => g.id === parseInt(req.params.id))
-  if (!genre)
-  return res.status(404).send("Genre with the given ID does not exist.")
+  if (!genre) return res.status(404).send("Genre with the given ID does not exist.")
+
   const {error} = validateGenre(req.body)
   if (error) return res.status(400).send(error.details[0].message)
 
@@ -45,6 +47,16 @@ app.put('/api/genres/:id', (req, res) => {
   res.send(genre)
 
 })
+
+app.delete('/api/genres/:id', (req, res) => {
+  const genre = genres.find(g => g.id === parseInt(req.params.id))
+
+  if(!genre) return res.status(404).send("Genre with the given ID does not exist.")
+  const index = genres.indexOf(genre)
+  genres.splice(index, 1)
+  res.send(genre)
+})
+
 
 function validateGenre(genre) {
   const schema = {
