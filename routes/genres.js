@@ -1,4 +1,8 @@
 const express = require('express')
+// Using router object instead of app when for seperate routes in seperate modules.
+const router = express.Router()
+const Joi = require('joi')
+router.use(express.json())
 
 const genres = [
   { id: 1, name: "Action" },
@@ -6,20 +10,20 @@ const genres = [
   { id: 3, name: "Thriller" }
 ]
 
-app.get("/api/genres", (req, res) => {
+router.get("/api/genres", (req, res) => {
   // to read query string parameters(for example: ?sortBy=name)
   // const sortBy = req.query.sortBy
   res.send(genres)
 })
 
-app.get("/api/genres/:id", (req, res) => {
+router.get("/api/genres/:id", (req, res) => {
   const genre = genres.find(g => g.id === parseInt(req.params.id))
   !genre
   ? res.status(404).send("Genre with the given ID does not exist.")
   : res.send(genre.name)
 })
 
-app.post("/api/genres", (req, res) => {
+router.post("/api/genres", (req, res) => {
 
   const {error} = validateGenre(req.body)
   if(error) return res.status(400).send(error.details[0].message)
@@ -32,7 +36,7 @@ app.post("/api/genres", (req, res) => {
   res.send(genre)
 })
 
-app.put('/api/genres/:id', (req, res) => {
+router.put('/api/genres/:id', (req, res) => {
   const genre = genres.find(g => g.id === parseInt(req.params.id))
   if (!genre) return res.status(404).send("Genre with the given ID does not exist.")
 
@@ -44,7 +48,7 @@ app.put('/api/genres/:id', (req, res) => {
 
 })
 
-app.delete('/api/genres/:id', (req, res) => {
+router.delete('/api/genres/:id', (req, res) => {
   const genre = genres.find(g => g.id === parseInt(req.params.id))
 
   if(!genre) return res.status(404).send("Genre with the given ID does not exist.")
