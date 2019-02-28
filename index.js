@@ -1,6 +1,7 @@
 const express = require("express")
 const Joi = require('joi')
 const app = express()
+const genres = require('./routes/genres')
 app.use(express.json())
 
 
