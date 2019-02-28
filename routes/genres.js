@@ -1,8 +1,9 @@
 const express = require('express')
-// Using router object instead of app when for seperate routes in seperate modules.
+// Using router object instead of app when routes are in seperate modules.
 const router = express.Router()
 const Joi = require('joi')
 router.use(express.json())
+
 
 const genres = [
   { id: 1, name: "Action" },
@@ -24,7 +25,6 @@ router.get("/:id", (req, res) => {
 })
 
 router.post("/", (req, res) => {
-
   const {error} = validateGenre(req.body)
   if(error) return res.status(400).send(error.details[0].message)
 
