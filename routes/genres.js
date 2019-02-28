@@ -10,20 +10,20 @@ const genres = [
   { id: 3, name: "Thriller" }
 ]
 
-router.get("/api/genres", (req, res) => {
+router.get("/", (req, res) => {
   // to read query string parameters(for example: ?sortBy=name)
   // const sortBy = req.query.sortBy
   res.send(genres)
 })
 
-router.get("/api/genres/:id", (req, res) => {
+router.get("/:id", (req, res) => {
   const genre = genres.find(g => g.id === parseInt(req.params.id))
   !genre
   ? res.status(404).send("Genre with the given ID does not exist.")
   : res.send(genre.name)
 })
 
-router.post("/api/genres", (req, res) => {
+router.post("/", (req, res) => {
 
   const {error} = validateGenre(req.body)
   if(error) return res.status(400).send(error.details[0].message)
@@ -36,7 +36,7 @@ router.post("/api/genres", (req, res) => {
   res.send(genre)
 })
 
-router.put('/api/genres/:id', (req, res) => {
+router.put('/:id', (req, res) => {
   const genre = genres.find(g => g.id === parseInt(req.params.id))
   if (!genre) return res.status(404).send("Genre with the given ID does not exist.")
 
@@ -48,7 +48,7 @@ router.put('/api/genres/:id', (req, res) => {
 
 })
 
-router.delete('/api/genres/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   const genre = genres.find(g => g.id === parseInt(req.params.id))
 
   if(!genre) return res.status(404).send("Genre with the given ID does not exist.")
@@ -64,3 +64,5 @@ function validateGenre(genre) {
   }
   return Joi.validate(genre, schema)
 }
+
+module.exports = router
