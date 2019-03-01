@@ -1,5 +1,6 @@
 const express = require("express")
 const genres = require('./routes/genres')
+const mongoose = require('mongoose')
 const app = express()
 
 // Middlewares
