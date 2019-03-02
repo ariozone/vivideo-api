@@ -29,27 +29,24 @@ async function createGenre(genreName) {
 
 
 
-router.get("/", async(req, res) => {
+router.get("/", async (req, res) => {
   const genres = await Genre.find().sort({name: 1})
   res.send(genres)
 })
 
-router.get("/:id", async(req, res) => {
+router.get("/:id", async (req, res) => {
   const genre = await Genre.findById(req.params.id)
   !genre
   ? res.status(404).send("Genre with the given ID does not exist.")
   : res.send(genre)
 })
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const {error} = validateGenre(req.body)
   if(error) return res.status(400).send(error.details[0].message)
 
-  const genre = {
-    id: genres.length + 1,
-    name: req.body.name
-  }
-  genres.push(genre)
+  let genre = new Genre({name: req.body.name})
+   genre = await genre.save() //Reassigning genre to be able to return it to the client
   res.send(genre)
 })
 
