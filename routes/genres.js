@@ -6,7 +6,12 @@ const mongoose = require('mongoose')
 router.use(express.json())
 
 const genreSchema = new mongoose.Schema({
-  name: String,
+  name: {
+    type: String,
+    required: true,
+    minlength: 3,
+    maxlength: 50
+  }
 })
 
 const Genre = mongoose.model('Genre', genreSchema)
@@ -22,21 +27,10 @@ async function createGenre(genreName) {
 // createGenre("Comedy")
 // createGenre("Thriller")
 
-async function getGenres() {
-  const genres = await Genre.find({})
-  console.log(genres)
-}
-getGenres()
 
-// const genres = [
-//   { id: 1, name: "Action" },
-//   { id: 2, name: "Comedy" },
-//   { id: 3, name: "Thriller" }
-// ]
 
-router.get("/", (req, res) => {
-  // to read query string parameters(for example: ?sortBy=name)
-  // const sortBy = req.query.sortBy
+router.get("/", async(req, res) => {
+  const genre = await Genre.find().sort({name: 1})
   res.send(genres)
 })
 
