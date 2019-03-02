@@ -34,11 +34,11 @@ router.get("/", async(req, res) => {
   res.send(genres)
 })
 
-router.get("/:id", (req, res) => {
-  const genre = genres.find(g => g.id === parseInt(req.params.id))
+router.get("/:id", async(req, res) => {
+  const genre = await Genre.findById(req.params.id)
   !genre
   ? res.status(404).send("Genre with the given ID does not exist.")
-  : res.send(genre.name)
+  : res.send(genre)
 })
 
 router.post("/", (req, res) => {
