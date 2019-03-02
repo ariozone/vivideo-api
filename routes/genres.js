@@ -11,9 +11,14 @@ const genreSchema = new mongoose.Schema({
 })
 
 const Genre = mongoose.model('Genre', genreSchema)
-const genre = new Genre({
-  name: 'Action'
-})
+async function createGenre() {
+  const genre = new Genre({
+    name: 'Action'
+  })
+  const result = await genre.save()
+  console.log(result)
+}
+createGenre()
 
 const genres = [
   { id: 1, name: "Action" },
