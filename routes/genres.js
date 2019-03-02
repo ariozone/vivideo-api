@@ -5,26 +5,34 @@ const Joi = require('joi')
 const mongoose = require('mongoose')
 router.use(express.json())
 
-
 const genreSchema = new mongoose.Schema({
   name: String,
 })
 
 const Genre = mongoose.model('Genre', genreSchema)
-async function createGenre() {
+
+async function createGenre(genreName) {
   const genre = new Genre({
-    name: 'Action'
+    name: genreName
   })
   const result = await genre.save()
   console.log(result)
 }
-createGenre()
+// createGenre("Action")
+// createGenre("Comedy")
+// createGenre("Thriller")
 
-const genres = [
-  { id: 1, name: "Action" },
-  { id: 2, name: "Comedy" },
-  { id: 3, name: "Thriller" }
-]
+async function getGenres() {
+  const genres = await Genre.find({})
+  console.log(genres)
+}
+getGenres()
+
+// const genres = [
+//   { id: 1, name: "Action" },
+//   { id: 2, name: "Comedy" },
+//   { id: 3, name: "Thriller" }
+// ]
 
 router.get("/", (req, res) => {
   // to read query string parameters(for example: ?sortBy=name)
