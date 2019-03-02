@@ -2,8 +2,18 @@ const express = require('express')
 // Using router object instead of app when routes are in seperate modules.
 const router = express.Router()
 const Joi = require('joi')
+const mongoose = require('mongoose')
 router.use(express.json())
 
+
+const genreSchema = new mongoose.Schema({
+  name: String,
+})
+
+const Genre = mongoose.model('Genre', genreSchema)
+const genre = new Genre({
+  name: 'Action'
+})
 
 const genres = [
   { id: 1, name: "Action" },
