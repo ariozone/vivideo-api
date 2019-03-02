@@ -30,7 +30,7 @@ async function createGenre(genreName) {
 
 
 router.get("/", async(req, res) => {
-  const genre = await Genre.find().sort({name: 1})
+  const genres = await Genre.find().sort({name: 1})
   res.send(genres)
 })
 
