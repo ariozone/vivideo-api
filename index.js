@@ -1,6 +1,11 @@
 const express = require("express")
 const genres = require('./routes/genres')
+const mongoose = require('mongoose')
 const app = express()
+
+mongoose.connect('mongodb://localhost/vivideo', { useNewUrlParser: true })
+.then(() => console.log('Connected to MongoDB...'))
+.catch(error => console.error('Could not connect to MongoDB...', error))
 
 // Middlewares
 app.use(express.json())
