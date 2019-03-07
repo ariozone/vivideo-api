@@ -1,6 +1,6 @@
+const mongoose = require("mongoose")
 const express = require("express")
 const router = express.Router()
-const mongoose = require("mongoose")
 
 const customerSchema = new mongoose.Schema({
   name: {
@@ -16,7 +16,14 @@ const customerSchema = new mongoose.Schema({
     maxlength: 100
   },
   isPrime: {
-    type: boolean,
+    type: Boolean,
     default: false
   }
+})
+
+const Customer = mongoose.model('Customer', customerSchema)
+
+router.get('/', async (req, res) => {
+  const customers = await Customer.find().sort({name: 1})
+  res.send(customers)
 })
