@@ -43,6 +43,8 @@ router.post("/", async (req, res) => {
     contact: req.body.contact,
     isPrime: req.body.isPrime
   })
+  const result = Joi.validate(customer, schema)
+  if (result.error) return res.status(400).send(result.error.details[0].message)
   customer = await customer.save()
   res.send(customer)
 })
@@ -52,7 +54,11 @@ const schema = {
     .min(3)
     .max(25)
     .required(),
-    contact: Joi.string().min(5).max(100).required(),
-    isPrime: Joi.boolean
+  contact: Joi.string()
+    .min(5)
+    .max(100)
+    .required(),
+  isPrime: Joi.boolean()
 }
+
 module.exports = router
