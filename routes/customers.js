@@ -27,3 +27,5 @@ router.get('/', async (req, res) => {
   const customers = await Customer.find().sort({name: 1})
   res.send(customers)
 })
+
+module.exports = router
