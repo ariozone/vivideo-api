@@ -35,4 +35,10 @@ router.get('/:id', async (req, res) => {
   res.send(customer)
 })
 
+router.post('/', async (req, res) => {
+  let customer = new Customer({name: req.body.name, contact: req.body.contact, isPrime: req.body.isPrime})
+  customer = await customer.save()
+  res.send(customer)
+})
+
 module.exports = router
