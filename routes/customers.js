@@ -38,14 +38,27 @@ router.get("/:id", async (req, res) => {
 })
 
 router.post("/", async (req, res) => {
-  let customer = new Customer({
-    name: req.body.name,
-    contact: req.body.contact,
-    isPrime: req.body.isPrime
-  })
+  let customer = new Customer(
+    {
+      name: req.body.name,
+      contact: req.body.contact,
+      isPrime: req.body.isPrime
+    }
+  )
   const result = Joi.validate(customer, schema)
   if (result.error) return res.status(400).send(result.error.details[0].message)
   customer = await customer.save()
+  res.send(customer)
+})
+
+router.put("/:id", async (req, res) => {
+  const customer = await Customer.findByIdAndUpdate(req.params.id, {
+    name: req.body.name,
+    contact: req.body.contact,
+    isPrime: req.body.isPrime
+  },
+  { new: true })
+  if(!customer) return res.status(404).send('Customer with given ID does not exist!')
   res.send(customer)
 })
 
