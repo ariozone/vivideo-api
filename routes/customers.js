@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 const express = require("express")
 const router = express.Router()
+router.use(express.json())
 
 const customerSchema = new mongoose.Schema({
   name: {
