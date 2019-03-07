@@ -28,4 +28,10 @@ router.get('/', async (req, res) => {
   res.send(customers)
 })
 
+router.get('/:id', async (req, res) => {
+  const customer = await Customer.findById(req.params.id)
+  if (!customer) return res.status(404).send('Customer with given ID does not exist!')
+  res.send(customer)
+})
+
 module.exports = router
