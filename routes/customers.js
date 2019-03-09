@@ -38,8 +38,8 @@ router.get("/:id", async (req, res) => {
 })
 
 router.post("/", async (req, res) => {
-  const result = validateCustomer(req.body)
-  if (result.error) return res.status(400).send(result.error.details[0].message)
+  const {error} = validateCustomer(req.body)
+  if (error) return res.status(400).send(error.details[0].message)
   let customer = new Customer(
     {
       name: req.body.name,
@@ -52,8 +52,8 @@ router.post("/", async (req, res) => {
 })
 
 router.put("/:id", async (req, res) => {
-  const result = validateCustomer(req.body)
-  if (result.error) return res.status(400).send(result.error.details[0].message)
+  const {error} = validateCustomer(req.body)
+  if (error) return res.status(400).send(error.details[0].message)
   const customer = await Customer.findByIdAndUpdate(req.params.id, {
     name: req.body.name,
     contact: req.body.contact,
