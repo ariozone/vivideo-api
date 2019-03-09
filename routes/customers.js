@@ -64,6 +64,13 @@ router.put("/:id", async (req, res) => {
   res.send(customer)
 })
 
+router.delete("/:id", async (req, res) => {
+  const customer = await Customer.findByIdAndRemove(req.params.id)
+  if (!customer)
+    return res.status(404).send("Customer with given ID does not exist!")
+  res.send(customer)
+})
+
 function validateCustomer(customer) {
   const schema = {
     name: Joi.string()
