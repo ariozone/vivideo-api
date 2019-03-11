@@ -3,8 +3,6 @@ const express = require("express")
 const router = express.Router()
 router.use(express.json())
 
-const Customer = mongoose.model("Customer", customerSchema)
-
 router.get("/", async (req, res) => {
   const customers = await Customer.find().sort({ name: 1 })
   res.send(customers)
