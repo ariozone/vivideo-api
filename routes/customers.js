@@ -1,5 +1,4 @@
 const mongoose = require("mongoose")
-const Joi = require("joi")
 const express = require("express")
 const router = express.Router()
 router.use(express.json())
@@ -52,5 +51,19 @@ router.delete("/:id", async (req, res) => {
   res.send(customer)
 })
 
+function validateCustomer(customer) {
+  const schema = {
+    name: Joi.string()
+      .min(3)
+      .max(25)
+      .required(),
+    contact: Joi.string()
+      .min(5)
+      .max(100)
+      .required(),
+    isPrime: Joi.boolean()
+  }
+  return Joi.validate(customer, schema)
+}
 
 module.exports = router
