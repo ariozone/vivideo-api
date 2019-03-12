@@ -2,6 +2,7 @@ const express = require("express")
 // Using router object instead; Because routes are in seperate modules.
 const router = express.Router()
 const mongoose = require("mongoose")
+const {Genre, validate} = require('../models/genre')
 router.use(express.json())
 
 router.get("/", async (req, res) => {
