@@ -1,7 +1,6 @@
 const express = require("express")
 // Using router object instead; Because routes are in seperate modules.
 const router = express.Router()
-const Joi = require("joi")
 const mongoose = require("mongoose")
 router.use(express.json())
 
