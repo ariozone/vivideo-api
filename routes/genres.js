@@ -5,17 +5,6 @@ const Joi = require("joi")
 const mongoose = require("mongoose")
 router.use(express.json())
 
-const genreSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    minlength: 3,
-    maxlength: 50
-  }
-})
-
-const Genre = mongoose.model("Genre", genreSchema)
-
 router.get("/", async (req, res) => {
   const genres = await Genre.find().sort({ name: 1 })
   res.send(genres)
