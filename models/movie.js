@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const genreSchema = require('./genre')
 
 const movieSchema = new mongoose.Schema({
   title: {
@@ -7,12 +8,7 @@ const movieSchema = new mongoose.Schema({
     minlength: 2,
     maxlength: 50
   },
-  genre: {
-    type: String,
-    required: true,
-    minlength: 3,
-    maxlength: 50
-  },
+  genre: genreSchema,
   numberInStock: {
     type: Number,
     required: true,
