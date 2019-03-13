@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-const genreSchema = require("./genre")
+const {genreSchema} = require("./genre")
 const Joi = require("joi")
 
 const movieSchema = new mongoose.Schema({
@@ -9,7 +9,10 @@ const movieSchema = new mongoose.Schema({
     minlength: 2,
     maxlength: 50
   },
-  genre: genreSchema,
+  genre: {
+    type: genreSchema,
+    required: true
+  },
   numberInStock: {
     type: Number,
     required: true,
@@ -20,7 +23,7 @@ const movieSchema = new mongoose.Schema({
     type: Number,
     required: true,
     min: 0,
-    max: 100
+    max: 255
   }
 })
 
@@ -32,10 +35,8 @@ function validateMovie(movie) {
       .required()
       .min(2)
       .max(50),
-    genre: Joi.string()
-      .required()
-      .min(3)
-      .max(50),
+    genreId: Joi.string() // User will send us genreId only, not genre neme.
+      .required(),
     numberInStock: Joi.number()
       .required()
       .min(0)
