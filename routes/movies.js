@@ -40,7 +40,7 @@ router.put('/:id', async(req, res) => {
 
   const genre = Genre.findById(req.body.genreId)
   if (!genre) res.status(400).send('Genre ID is invalid!')
-  
+
   let movie = await Movie.findByIdAndUpdate(req.params.id, {
     title: req.body.title,
     genre: {
