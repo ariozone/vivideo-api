@@ -50,3 +50,9 @@ router.put('/:id', async(req, res) => {
   movie= await movie.save()
   res.send(movie)
 })
+
+router.delete('/:id', async(req, res) => {
+  const movie = await Movie.findByIdAndRemove(req.params.id)
+  if (!movie) return res.status(404).send('Movie with the given ID does not exist!')
+  res.send(movie)
+})
