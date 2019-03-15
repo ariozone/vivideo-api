@@ -1,1 +1,5 @@
-// a rental model
+const mongoose = require('mongoose')
+
+const rentalSchema = new mongoose.Schema({
+
+})
