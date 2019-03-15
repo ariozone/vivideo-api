@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const Joi = require('joi')
 
 const rentalSchema = new mongoose.Schema({
   customer: {
@@ -54,3 +55,8 @@ const rentalSchema = new mongoose.Schema({
     min: 0
   }
 })
+
+const schema = {
+  customerId: Joi.string().required(),
+  movieId: Joi.string().required()
+}
