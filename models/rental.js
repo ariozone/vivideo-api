@@ -1,5 +1,5 @@
 const mongoose = require("mongoose")
-const Joi = require('joi')
+const Joi = require("joi")
 
 const rentalSchema = new mongoose.Schema({
   customer: {
@@ -33,7 +33,8 @@ const rentalSchema = new mongoose.Schema({
         minlength: 3,
         maxlength: 50
       },
-      dailyRentalRate: {// Embedded this to avoid additional query
+      dailyRentalRate: {
+        // Embedded this to avoid additional query
         type: Number,
         required: true,
         min: 0,
@@ -63,3 +64,6 @@ function validateRental(rental) {
   }
   return Joi.validate(rental, schema)
 }
+
+module.exports.validate = validateRental
+module.exports.Rental = Rental
