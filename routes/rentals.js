@@ -39,15 +39,17 @@ router.post("/", async (req, res) => {
       dailyRentalRate: movie.dailyRentalRate
     }
   })
-  const task = Fawn.Task()
   try {
+    const task = Fawn.Task()
     task
       .save("rentals", rental)
       .update("movies", { _id: movie._id }, { $inc: { numberInStock: -1 } })
       .run()
     res.send(rental)
   }
-  catch(ex){
-    
+  catch(ex) {
+    res.status(500).send('Could not complete the task!')
   }
 })
+
+module.exports = router
