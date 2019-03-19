@@ -5,6 +5,8 @@ const movies = require('./routes/movies')
 const rentals = require('./routes/rentals')
 const mongoose = require('mongoose')
 const app = express()
+const Joi = require("joi")
+Joi.objectId = require('joi-objectid')(Joi)
 
 mongoose.connect('mongodb://localhost/vivideo', { useNewUrlParser: true })
 .then(() => console.log('Connected to MongoDB...'))
