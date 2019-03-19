@@ -36,5 +36,8 @@ router.post('/', async(req, res) => {
   })
 
   rental = await rental.save()
+  movie.numberInStock--
+  movie.save()
+  res.send(rental)
 
 })
