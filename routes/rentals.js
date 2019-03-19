@@ -6,6 +6,7 @@ const Fawn = require("fawn")
 const express = require("express")
 const router = express.Router()
 
+
 Fawn.init(mongoose)
 
 router.get("/", async (req, res) => {
@@ -39,10 +40,14 @@ router.post("/", async (req, res) => {
     }
   })
   const task = Fawn.Task()
-
-  task
-    .save("rentals", rental)
-    .update("movies", { _id: movie._id }, { $inc: { numberInStock: -1 } })
-    .run()
-  res.send(rental)
+  try {
+    task
+      .save("rentals", rental)
+      .update("movies", { _id: movie._id }, { $inc: { numberInStock: -1 } })
+      .run()
+    res.send(rental)
+  }
+  catch(ex){
+    
+  }
 })
