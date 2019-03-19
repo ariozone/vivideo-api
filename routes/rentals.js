@@ -1,9 +1,13 @@
 const {Rental, validate} = require('../models/rental')
 const {Movie} = require('../models/movie')
 const {Customer} = require('../models/customer')
+const mongoose = require('mongoose')
 const Fawn = require('fawn')
 const express = require('express')
 const router = express.Router()
+
+Fawn.init(mongoose)
+
 
 router.get('/', async(req, res) => {
   const rentals = await Rental.find().sort({dateOut: -1})
@@ -35,6 +39,7 @@ router.post('/', async(req, res) => {
     }
 
   })
+  const task = Fawn.Task()
 
   rental = await rental.save()
   movie.numberInStock--
