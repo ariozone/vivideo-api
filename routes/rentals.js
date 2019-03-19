@@ -19,7 +19,22 @@ router.post('/', async(req, res) => {
   const movie = await Movie.findById(req.body.movieId)
   if (!movie) return res.status(400).send('Invalid Movie!')
 
-  if (movie.numberInStock === 0) return res.status(400).send('Movie is not in stock')
+  if (movie.numberInStock === 0) return res.status(400).send('Movie is not in stock!')
 
+  let rental = new Rental({
+    customer: {
+      _id: customer._id,
+      name: customer.name,
+      contact: customer.contact
+    },
+    movie: {
+      _id: movie._id,
+      title: movie.title,
+      dailyRentalRate: movie.dailyRentalRate
+    }
+
+  })
+
+  rental = await rental.save()
 
 })
