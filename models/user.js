@@ -1,4 +1,5 @@
 const mongoose = require("mongoose")
+const Joi = require('joi')
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -23,3 +24,8 @@ const userSchema = new mongoose.Schema({
 })
 
 const User = mongoose.model('User', userSchema)
+const Schema = {
+  name: Joi.string().required().min(3).max(50),
+  email: Joi.string().required(). min(5).max(255).email(),
+  password: Joi.string().required().min(5).max(255)
+}
