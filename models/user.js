@@ -21,3 +21,5 @@ const userSchema = new mongoose.Schema({
     maxlength: 1024 // To be able to hash the password later.
   }
 })
+
+const User = mongoose.model('User', userSchema)
