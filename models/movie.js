@@ -35,7 +35,7 @@ function validateMovie(movie) {
       .required()
       .min(2)
       .max(50),
-    genreId: Joi.string() // User will send us genreId only, not genre name.
+    genreId: Joi.objectId() // User will send us genreId only, not genre name.
       .required(),
     numberInStock: Joi.number()
       .required()

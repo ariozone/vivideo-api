@@ -18,8 +18,10 @@
   "homepage": "https://github.com/ariozone/vivideo-api#readme",
   "dependencies": {
     "express": "^4.16.4",
+    "fawn": "^2.1.5",
     "install": "^0.12.2",
     "joi": "^14.3.1",
+    "joi-objectid": "^2.0.0",
     "mongoose": "^5.4.16"
   }
 }
