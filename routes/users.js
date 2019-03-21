@@ -1,1 +1,1 @@
-// Users routes
+const {User, validate} = require('../models/user')
