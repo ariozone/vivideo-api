@@ -33,8 +33,21 @@ function validateUser(user) {
     password: Joi.string().required().min(5).max(255)
   }
   return Joi.validate(user, schema)
-
+}
+function validatePassword(password) {
+  const complexityOptions = {
+    min: 6,
+    max: 255,
+    lowerCase: 1,
+    upperCase: 1,
+    numeric: 1,
+    symbol: 1
+  }
+  const result = Joi.validate(password, new PasswordComplexity(complexityOptions))
+  console.log(result)
+  return result
 }
 
 module.exports.validate = validateUser
 module.exports.User = User
+module.exports.validatePassword = validatePassword
