@@ -25,6 +25,8 @@ router.post("/", async (req, res) => {
     password: req.body.password
   })
 
+  user.password = await bcrypt.hash(user.password, salt)
+
   await user.save()
   res.send(_.pick(user, ['_id','name', 'email']))
 })

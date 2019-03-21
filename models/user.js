@@ -43,9 +43,8 @@ function validatePassword(password) {
     numeric: 1,
     symbol: 1
   }
-  const result = Joi.validate(password, new PasswordComplexity(complexityOptions))
-  console.log(result)
-  return result
+   return Joi.validate(password, new PasswordComplexity(complexityOptions))
+
 }
 
 module.exports.validate = validateUser
