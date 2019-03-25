@@ -3,13 +3,18 @@ const express = require('express')
 const router = express.Router()
 const mongoose = require('mongoose')
 const Joi = require('joi')
+const bcrypt = require('bcrypt')
 
 router.post('/', async(req, res) => {
   const {error} = validateLogin(req.body)
   if (error) return res.status(400).send(error.details[0].message)
 
-  const user = await User.findOne({email: req.body.email})
-  if (!user) return res.status(400).send('User does not exist!')
+  let user = await User.findOne({email: req.body.email})
+  if (!user) return res.status(400).send('Invalid Username or Password!')
+
+  userValidPassword = await bcrypt.compare(req.body.password, user.password)
+
+
 
 })
 
