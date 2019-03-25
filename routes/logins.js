@@ -4,6 +4,7 @@ const router = express.Router()
 const mongoose = require('mongoose')
 const Joi = require('joi')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 
 router.post('/', async(req, res) => {
   const {error} = validateLogin(req.body)
