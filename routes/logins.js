@@ -10,30 +10,22 @@ router.post('/', async(req, res) => {
   if (error) return res.status(400).send(error.details[0].message)
 
   let user = await User.findOne({email: req.body.email})
-  if (!user) return res.status(400).send('Invalid Username or Password!')
+  if (!user) return res.status(400).send('Invalid Username!')
 
   userValidPassword = await bcrypt.compare(req.body.password, user.password)
+  if (!userValidPassword) return res.status(400).send('Invalid Password!')
+  user = await User.findOne({password: userValidPassword})
 
-
+  res.send(user)
 
 })
 
 function validateLogin(login){
   const schema = {
-    email: {
-      type: String,
-      required: true,
-      minlength: 5,
-      maxlength: 255,
-      unique: true
-    },
-    password: {
-      type: String,
-      required: true,
-      minlength: 6,
-      maxlength: 1024
-    }
+    email: Joi.string().min(5).max(255).email().required(),
+    password: Joi.string().min(6).max(255).required()
   }
   return Joi.validate(login, schema)
 
 }
+module.exports = router
