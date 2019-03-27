@@ -12,8 +12,9 @@ router.post('/', async(req, res) => {
   if (error) return res.status(400).send(error.details[0].message)
 
   let user = await User.findOne({email: req.body.email})
-  if (!user) return res.status(400).send('Invalid Username!')
+  if (!user) return res.status(400).send('Invalid User!')
 
+// comparing plain text password with hashed password
   userValidPassword = await bcrypt.compare(req.body.password, user.password)
   if (!userValidPassword) return res.status(400).send('Invalid Password!')
 

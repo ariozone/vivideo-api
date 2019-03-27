@@ -21,7 +21,7 @@ router.post("/", async (req, res) => {
     email: req.body.email,
     password: req.body.password
   })
-
+// assigning a hashed password to user
   user.password = await bcrypt.hash(user.password, salt)
 
   await user.save()
