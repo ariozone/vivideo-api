@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt')
 const _ = require('lodash')
 const express = require("express")
 const router = express.Router()
+const config = require('config')
+const jwt = require('jsonwebtoken')
 
 
 router.post("/", async (req, res) => {
@@ -26,6 +28,7 @@ router.post("/", async (req, res) => {
 
   await user.save()
   res.send(_.pick(user, ['_id','name', 'email']))
+  const token = jwt.sign({_id: user._id}, config.get('jwtPrivateKey'))
 })
 
 module.exports = router
