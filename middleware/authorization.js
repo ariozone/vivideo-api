@@ -7,4 +7,8 @@ module.exports = function auth(req, res, next) {
     return res
       .status(401)
       .send("User is not authorized to access! No token provided.")
+
+      try {
+        const decodedPayload = jwt.verify(token, config.get('jwtPrivateKey'))
+      }
 }
