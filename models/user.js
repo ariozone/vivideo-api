@@ -23,12 +23,14 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 6,
     maxlength: 1024 // To be able to hash the password later.
-  },
-  generateToken: function() {
-
-    return token
   }
 })
+
+// Adding a method to userSchema
+// Not using arrow funtions because this must refer to user object.
+userSchema.methods.generateToken = function() {
+  return jwt.sign({_id: this._id}, config.get('jwtPrivateKey'))
+}
 
 const User = mongoose.model('User', userSchema)
 
