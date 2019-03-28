@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken")
 const config = require("config")
 
-module.exports = function auth(req, res, next) {
+function auth(req, res, next) {
   const token = req.header("x-auth-token")
   if (!token)
     return res
@@ -19,3 +19,5 @@ module.exports = function auth(req, res, next) {
     res.status(400).send("Token is not valid!")
   }
 }
+
+module.exports = auth
