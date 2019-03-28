@@ -8,7 +8,9 @@ module.exports = function auth(req, res, next) {
       .status(401)
       .send("User is not authorized to access! No token provided.")
 
-      try {
-        const decodedPayload = jwt.verify(token, config.get('jwtPrivateKey'))
-      }
+  try {
+    const decodedPayload = jwt.verify(token, config.get("jwtPrivateKey"))
+  } catch (ex) {
+    res.status(400).send("Token is not valid!")
+  }
 }
