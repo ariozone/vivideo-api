@@ -1,4 +1,6 @@
 const mongoose = require("mongoose")
+const jwt = require('jsonwebtoken')
+const config = require('config')
 const Joi = require('joi')
 const PasswordComplexity = require('joi-password-complexity')
 
@@ -21,6 +23,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 6,
     maxlength: 1024 // To be able to hash the password later.
+  },
+  generateToken: function() {
+
+    return token
   }
 })
 
