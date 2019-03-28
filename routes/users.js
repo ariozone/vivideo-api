@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
 
   await user.save()
 
-  const token = jwt.sign({_id: user._id}, config.get('jwtPrivateKey'))
+  const token = user.generateToken()
   // Sending header along with body of the response.
   res.header('x-auth-token', token).send(_.pick(user, ['_id','name', 'email']))
 })
