@@ -6,9 +6,12 @@ const express = require("express")
 const router = express.Router()
 const config = require("config")
 const jwt = require("jsonwebtoken")
+const auth = require("../middleware/authorization")
 
 // Getting the current user
-router.get("/me", async (req, res) => {})
+router.get("/me", auth, async (req, res) => {
+  const user = User.findOne({ _id: req.user.id })
+})
 
 router.post("/", async (req, res) => {
   const { error } = validate(req.body)
