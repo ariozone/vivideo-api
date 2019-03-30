@@ -33,7 +33,10 @@ const userSchema = new mongoose.Schema({
 // Adding a method to userSchema
 // Not using arrow funtions because this must refer to user object.
 userSchema.methods.generateToken = function() {
-  return jwt.sign({ _id: this._id }, config.get("jwtPrivateKey"))
+  return jwt.sign(
+    { _id: this._id, isAdmin: this.isAdmin },
+    config.get("jwtPrivateKey")
+  )
 }
 
 const User = mongoose.model("User", userSchema)
