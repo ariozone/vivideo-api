@@ -10,7 +10,8 @@ const auth = require("../middleware/authorization")
 
 // Getting the current user
 router.get("/me", auth, async (req, res) => {
-  const user = User.findOne({ _id: req.user.id })
+  const user = User.findById(req.user._id).select("-password")
+  res.send(user)
 })
 
 router.post("/", async (req, res) => {
