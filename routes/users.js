@@ -10,7 +10,7 @@ const auth = require("../middleware/authorization")
 
 // Getting the current user
 router.get("/me", auth, async (req, res) => {
-  const user = User.findById(req.user._id).select("-password")
+  const user = await User.findById(req.user._id).select("-password")
   res.send(user)
 })
 
