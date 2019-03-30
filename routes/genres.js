@@ -1,4 +1,5 @@
 const auth = require("../middleware/authorization")
+const admin = require("../middleware/admin")
 const express = require("express")
 // Using router object instead; Because routes are in seperate modules.
 const router = express.Router()
@@ -42,7 +43,7 @@ router.put("/:id", auth, async (req, res) => {
   res.send(genre)
 })
 
-router.delete("/:id", auth, async (req, res) => {
+router.delete("/:id", [auth, admin], async (req, res) => {
   const genre = await Genre.findByIdAndRemove(req.params.id)
 
   if (!genre)

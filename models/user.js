@@ -24,10 +24,11 @@ const userSchema = new mongoose.Schema({
     minlength: 6,
     maxlength: 1024 // To be able to hash the password later.
   },
-  isAdmin: {
-    type: Boolean,
-    default: false
-  }
+  isAdmin: Boolean
+  // for multiple roles or operations use arrays of complex objects.
+  // rols: [],
+  // operations: []
+  // Add them to jwt and define a middleware to grant access or deny it.
 })
 
 // Adding a method to userSchema
