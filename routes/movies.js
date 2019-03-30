@@ -1,5 +1,6 @@
 const { Movie, validate } = require("../models/movie")
-const {Genre} = require('../models/genre')
+const { Genre } = require("../models/genre")
+const auth = require("../middleware/authorization")
 const express = require("express")
 const router = express.Router()
 router.use(express.json())
@@ -16,11 +17,11 @@ router.get("/:id", async (req, res) => {
   res.send(movie)
 })
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const { error } = validate(req.body)
   if (error) return res.status(400).send(error.details[0].message)
   const genre = await Genre.findById(req.body.genreId)
-  if (!genre) res.status(400).send('Genre ID is invalid!')
+  if (!genre) res.status(400).send("Genre ID is invalid!")
   const movie = new Movie({
     title: req.body.title,
     genre: {
@@ -34,12 +35,12 @@ router.post("/", async (req, res) => {
   res.send(movie)
 })
 
-router.put('/:id', async(req, res) => {
-  const {error} = validate(req.body)
+router.put("/:id", auth, async (req, res) => {
+  const { error } = validate(req.body)
   if (error) res.status(400).send(error.details[0].message)
 
   const genre = Genre.findById(req.body.genreId)
-  if (!genre) res.status(400).send('Genre ID is invalid!')
+  if (!genre) res.status(400).send("Genre ID is invalid!")
 
   const movie = await Movie.findByIdAndUpdate(req.params.id, {
     title: req.body.title,
@@ -53,9 +54,10 @@ router.put('/:id', async(req, res) => {
   res.send(movie)
 })
 
-router.delete('/:id', async(req, res) => {
+router.delete("/:id", auth, async (req, res) => {
   const movie = await Movie.findByIdAndRemove(req.params.id)
-  if (!movie) return res.status(404).send('Movie with the given ID does not exist!')
+  if (!movie)
+    return res.status(404).send("Movie with the given ID does not exist!")
   res.send(movie)
 })
 

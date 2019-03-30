@@ -1,6 +1,8 @@
 const mongoose = require("mongoose")
-const Joi = require('joi')
-const PasswordComplexity = require('joi-password-complexity')
+const jwt = require("jsonwebtoken")
+const config = require("config")
+const Joi = require("joi")
+const PasswordComplexity = require("joi-password-complexity")
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -21,16 +23,40 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 6,
     maxlength: 1024 // To be able to hash the password later.
-  }
+  },
+  isAdmin: Boolean
+  // for multiple roles or operations use arrays of complex objects.
+  // rols: [],
+  // operations: []
+  // Add them to jwt and define a middleware to grant access or deny it.
 })
 
-const User = mongoose.model('User', userSchema)
+// Adding a method to userSchema
+// Not using arrow funtions because this must refer to user object.
+userSchema.methods.generateToken = function() {
+  return jwt.sign(
+    { _id: this._id, isAdmin: this.isAdmin },
+    config.get("jwtPrivateKey")
+  )
+}
+
+const User = mongoose.model("User", userSchema)
 
 function validateUser(user) {
   const schema = {
-    name: Joi.string().required().min(3).max(50),
-    email: Joi.string().required(). min(5).max(255).email(),
-    password: Joi.string().required().min(5).max(255)
+    name: Joi.string()
+      .required()
+      .min(3)
+      .max(50),
+    email: Joi.string()
+      .required()
+      .min(5)
+      .max(255)
+      .email(),
+    password: Joi.string()
+      .required()
+      .min(5)
+      .max(255)
   }
   return Joi.validate(user, schema)
 }
@@ -43,8 +69,7 @@ function validatePassword(password) {
     numeric: 1,
     symbol: 1
   }
-   return Joi.validate(password, new PasswordComplexity(complexityOptions))
-
+  return Joi.validate(password, new PasswordComplexity(complexityOptions))
 }
 
 module.exports.validate = validateUser
