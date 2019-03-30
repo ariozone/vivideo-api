@@ -1,12 +1,14 @@
 const { User, validate, validatePassword } = require("../models/user")
 const mongoose = require("mongoose")
-const bcrypt = require('bcrypt')
-const _ = require('lodash')
+const bcrypt = require("bcrypt")
+const _ = require("lodash")
 const express = require("express")
 const router = express.Router()
-const config = require('config')
-const jwt = require('jsonwebtoken')
+const config = require("config")
+const jwt = require("jsonwebtoken")
 
+// Getting the current user
+router.get("/me", async (req, res) => {})
 
 router.post("/", async (req, res) => {
   const { error } = validate(req.body)
@@ -23,14 +25,14 @@ router.post("/", async (req, res) => {
     email: req.body.email,
     password: req.body.password
   })
-// assigning a hashed password to user
+  // assigning a hashed password to user
   user.password = await bcrypt.hash(user.password, salt)
 
   await user.save()
 
   const token = user.generateToken()
   // Sending header along with body of the response.
-  res.header('x-auth-token', token).send(_.pick(user, ['_id','name', 'email']))
+  res.header("x-auth-token", token).send(_.pick(user, ["_id", "name", "email"]))
 })
 
 module.exports = router
