@@ -8,6 +8,7 @@ const users = require("./routes/users")
 const logins = require("./routes/logins")
 const mongoose = require("mongoose")
 const app = express()
+const error = require("./middleware/error")
 const Joi = require("joi")
 Joi.objectId = require("joi-objectid")(Joi)
 
@@ -29,7 +30,7 @@ app.use("/api/movies", movies)
 app.use("/api/rentals", rentals)
 app.use("/api/users", users)
 app.use("/api/logins", logins)
-app.use()
+app.use(error)
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Listening on port ${port}...`))
