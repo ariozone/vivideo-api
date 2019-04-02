@@ -29,7 +29,10 @@ app.use("/api/movies", movies)
 app.use("/api/rentals", rentals)
 app.use("/api/users", users)
 app.use("/api/logins", logins)
-app.use(function(err, req, res, next) {})
+app.use(function(err, req, res, next) {
+  res.status(500).send("Something went wrong!")
+  next()
+})
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Listening on port ${port}...`))
