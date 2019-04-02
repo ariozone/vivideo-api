@@ -14,6 +14,13 @@ const error = require("./middleware/error")
 const Joi = require("joi")
 Joi.objectId = require("joi-objectid")(Joi)
 
+const logger = winston.createLogger({
+  transport: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filname: "logs.log" })
+  ]
+})
+
 if (!config.get("jwtPrivateKey")) {
   console.log("FATAL ERROR: jwtPrivateKey is not defined.")
   process.exit(1)
