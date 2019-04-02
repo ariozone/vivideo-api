@@ -1,4 +1,5 @@
 const express = require("express")
+require("express-async-errors")
 const config = require("config")
 const genres = require("./routes/genres")
 const customers = require("./routes/customers")
