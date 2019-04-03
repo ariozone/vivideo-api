@@ -30,6 +30,6 @@
     "lodash": "^4.17.11",
     "mongoose": "^5.4.20",
     "winston": "^2.4.4",
-    "winston-mongodb": "^5.0.0"
+    "winston-mongodb": "^3.0.2"
   }
 }
