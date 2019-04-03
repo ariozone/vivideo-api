@@ -8,7 +8,7 @@ const { Genre, validate } = require("../models/genre")
 router.use(express.json())
 
 router.get("/", async (req, res) => {
-  // throw new Error("Something is wrong!") // to test
+  throw new Error("Something is wrong!") // to test
 
   const genres = await Genre.find().sort({ name: 1 })
   res.send(genres)
