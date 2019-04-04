@@ -17,7 +17,8 @@ Joi.objectId = require("joi-objectid")(Joi)
 
 winston.handleExceptions(
   // does not work with rejected promises
-  new winston.transports.File({ filename: "uncaught-exceptions.log" })
+  new winston.transports.File({ filename: "uncaught-exceptions.log" }),
+  new winston.transports.Console({ prettyPrint: true, colorize: true })
 )
 
 process.on("unhandledRejection", ex => {
@@ -29,12 +30,6 @@ winston.add(winston.transports.MongoDB, {
   db: "mongodb://localhost/vivideo",
   level: "error"
 })
-
-// throw new Error("UNCAUGHT EXCEPTION!")
-
-// Creating a rejected promise to test unhandled rejections.
-const rejectedPromise = Promise.reject(new Error("FAILED!"))
-rejectedPromise.then(() => console.log("DONE!"))
 
 if (!config.get("jwtPrivateKey")) {
   console.log("FATAL ERROR: jwtPrivateKey is not defined.")
