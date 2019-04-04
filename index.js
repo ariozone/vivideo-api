@@ -15,7 +15,10 @@ const error = require("./middleware/error")
 const Joi = require("joi")
 Joi.objectId = require("joi-objectid")(Joi)
 
-throw new Error("there is an uncaught exception!")
+process.on("uncaughtException", ex => {
+  console.log("UNCAUGHT EXCEPTION!")
+  winston.error(ex.message, ex)
+})
 
 winston.add(winston.transports.File, { filename: "logs.log" })
 winston.add(winston.transports.MongoDB, {
@@ -23,9 +26,7 @@ winston.add(winston.transports.MongoDB, {
   level: "error"
 })
 
-process.on("uncaughtException", ex => {
-  console.log(ex.message)
-})
+throw new Error("there is an uncaught exception!")
 
 if (!config.get("jwtPrivateKey")) {
   console.log("FATAL ERROR: jwtPrivateKey is not defined.")
