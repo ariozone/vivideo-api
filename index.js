@@ -15,15 +15,14 @@ const error = require("./middleware/error")
 const Joi = require("joi")
 Joi.objectId = require("joi-objectid")(Joi)
 
-process.on("uncaughtException", ex => {
-  // Works sync only
-  console.log("UNCAUGHT EXCEPTION!")
-  winston.error(ex.message, ex)
-})
+winston.handleExceptions(
+  new winston.transports.File({ filename: "uncaught-exceptions.log" })
+)
 
 process.on("unhandledRejection", ex => {
   console.log("UNHANDLED REJECTION!")
   winston.error(ex.message, ex)
+  process.exit(1)
 })
 
 winston.add(winston.transports.File, { filename: "logs.log" })
@@ -32,9 +31,11 @@ winston.add(winston.transports.MongoDB, {
   level: "error"
 })
 
-// Creating a rejected promise to test
-const rejectedPromise = Promise.reject(new Error("FAILED!"))
-rejectedPromise.then(() => console.log("DONE!"))
+throw new Error("UNCAUGHT EXCEPTION!")
+
+// Creating a rejected promise to test unhandled rejections.
+// const rejectedPromise = Promise.reject(new Error("FAILED!"))
+// rejectedPromise.then(() => console.log("DONE!"))
 
 if (!config.get("jwtPrivateKey")) {
   console.log("FATAL ERROR: jwtPrivateKey is not defined.")
