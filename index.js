@@ -1,4 +1,7 @@
 const express = require("express")
+require("express-async-errors")
+const winston = require("winston")
+require("winston-mongodb")
 const config = require("config")
 const genres = require("./routes/genres")
 const customers = require("./routes/customers")
@@ -8,8 +11,25 @@ const users = require("./routes/users")
 const logins = require("./routes/logins")
 const mongoose = require("mongoose")
 const app = express()
+const error = require("./middleware/error")
 const Joi = require("joi")
 Joi.objectId = require("joi-objectid")(Joi)
+
+winston.handleExceptions(
+  // does not work with rejected promises
+  new winston.transports.File({ filename: "uncaught-exceptions.log" }),
+  new winston.transports.Console({ prettyPrint: true, colorize: true })
+)
+
+process.on("unhandledRejection", ex => {
+  throw ex // winston will get it, log it and terminates the process.
+})
+
+winston.add(winston.transports.File, { filename: "logs.log" })
+winston.add(winston.transports.MongoDB, {
+  db: "mongodb://localhost/vivideo",
+  level: "error"
+})
 
 if (!config.get("jwtPrivateKey")) {
   console.log("FATAL ERROR: jwtPrivateKey is not defined.")
@@ -17,7 +37,10 @@ if (!config.get("jwtPrivateKey")) {
 }
 
 mongoose
-  .connect("mongodb://localhost/vivideo", { useNewUrlParser: true })
+  .connect("mongodb://localhost/vivideo", {
+    useNewUrlParser: true,
+    useCreateIndex: true
+  })
   .then(() => console.log("Connected to MongoDB..."))
   .catch(error => console.error("Could not connect to MongoDB...", error))
 
@@ -29,6 +52,7 @@ app.use("/api/movies", movies)
 app.use("/api/rentals", rentals)
 app.use("/api/users", users)
 app.use("/api/logins", logins)
+app.use(error)
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Listening on port ${port}...`))
