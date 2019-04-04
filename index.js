@@ -16,13 +16,12 @@ const Joi = require("joi")
 Joi.objectId = require("joi-objectid")(Joi)
 
 winston.handleExceptions(
+  // does not work with rejected promises
   new winston.transports.File({ filename: "uncaught-exceptions.log" })
 )
 
 process.on("unhandledRejection", ex => {
-  console.log("UNHANDLED REJECTION!")
-  winston.error(ex.message, ex)
-  process.exit(1)
+  throw ex // winston will get it, log it and terminates the process.
 })
 
 winston.add(winston.transports.File, { filename: "logs.log" })
@@ -31,11 +30,11 @@ winston.add(winston.transports.MongoDB, {
   level: "error"
 })
 
-throw new Error("UNCAUGHT EXCEPTION!")
+// throw new Error("UNCAUGHT EXCEPTION!")
 
 // Creating a rejected promise to test unhandled rejections.
-// const rejectedPromise = Promise.reject(new Error("FAILED!"))
-// rejectedPromise.then(() => console.log("DONE!"))
+const rejectedPromise = Promise.reject(new Error("FAILED!"))
+rejectedPromise.then(() => console.log("DONE!"))
 
 if (!config.get("jwtPrivateKey")) {
   console.log("FATAL ERROR: jwtPrivateKey is not defined.")
