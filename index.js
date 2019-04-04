@@ -15,10 +15,16 @@ const error = require("./middleware/error")
 const Joi = require("joi")
 Joi.objectId = require("joi-objectid")(Joi)
 
+throw new Error("there is an uncaught exception!")
+
 winston.add(winston.transports.File, { filename: "logs.log" })
 winston.add(winston.transports.MongoDB, {
   db: "mongodb://localhost/vivideo",
   level: "error"
+})
+
+process.on("uncaughtException", ex => {
+  console.log(ex.message)
 })
 
 if (!config.get("jwtPrivateKey")) {
