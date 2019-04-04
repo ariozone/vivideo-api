@@ -23,6 +23,7 @@ process.on("uncaughtException", ex => {
 
 process.on("unhandledRejection", ex => {
   console.log("UNHANDLED REJECTION!")
+  winston.error(ex.message, ex)
 })
 
 winston.add(winston.transports.File, { filename: "logs.log" })
