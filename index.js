@@ -22,7 +22,7 @@ winston.handleExceptions(
 )
 
 process.on("unhandledRejection", ex => {
-  throw ex // winston will get it, log it and terminates the process.
+  throw ex // winston gets it, logs it and terminates the process.
 })
 
 winston.add(winston.transports.File, { filename: "logs.log" })
