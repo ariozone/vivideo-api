@@ -8,6 +8,7 @@ const app = express()
 const Joi = require("joi")
 Joi.objectId = require("joi-objectid")(Joi)
 require("./startup/routes")(app)
+require("./startup/db")()
 
 winston.handleExceptions(
   // does not work with rejected promises
@@ -29,14 +30,6 @@ if (!config.get("jwtPrivateKey")) {
   console.log("FATAL ERROR: jwtPrivateKey is not defined.")
   process.exit(1)
 }
-
-mongoose
-  .connect("mongodb://localhost/vivideo", {
-    useNewUrlParser: true,
-    useCreateIndex: true
-  })
-  .then(() => console.log("Connected to MongoDB..."))
-  .catch(error => console.error("Could not connect to MongoDB...", error))
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Listening on port ${port}...`))
