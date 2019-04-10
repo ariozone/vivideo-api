@@ -14,6 +14,7 @@ const app = express()
 const error = require("./middleware/error")
 const Joi = require("joi")
 Joi.objectId = require("joi-objectid")(Joi)
+require("./startup/routes")(app)
 
 winston.handleExceptions(
   // does not work with rejected promises
