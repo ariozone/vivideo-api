@@ -1,10 +1,10 @@
 const mongoose = require("mongoose")
+const winston = require("winston")
 module.exports = function() {
   mongoose
     .connect("mongodb://localhost/vivideo", {
       useNewUrlParser: true,
       useCreateIndex: true
     })
-    .then(() => console.log("Connected to MongoDB..."))
-    .catch(error => console.error("Could not connect to MongoDB...", error))
+    .then(() => winston.info("Connected to MongoDB..."))
 }
