@@ -1,5 +1,5 @@
 const express = require("express")
-require("express-async-errors")
+
 const winston = require("winston")
 require("winston-mongodb")
 const config = require("config")
@@ -7,24 +7,9 @@ const mongoose = require("mongoose")
 const app = express()
 const Joi = require("joi")
 Joi.objectId = require("joi-objectid")(Joi)
+require("./startup/logging")()
 require("./startup/routes")(app)
 require("./startup/db")()
-
-winston.handleExceptions(
-  // does not work with rejected promises
-  new winston.transports.File({ filename: "uncaught-exceptions.log" }),
-  new winston.transports.Console({ prettyPrint: true, colorize: true })
-)
-
-process.on("unhandledRejection", ex => {
-  throw ex // winston gets it, logs it and terminates the process.
-})
-
-winston.add(winston.transports.File, { filename: "logs.log" })
-winston.add(winston.transports.MongoDB, {
-  db: "mongodb://localhost/vivideo",
-  level: "error"
-})
 
 if (!config.get("jwtPrivateKey")) {
   console.log("FATAL ERROR: jwtPrivateKey is not defined.")
