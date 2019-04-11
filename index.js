@@ -1,13 +1,11 @@
 const express = require("express")
-
-const winston = require("winston")
-require("winston-mongodb")
 const config = require("config")
 const mongoose = require("mongoose")
 const app = express()
 const Joi = require("joi")
 Joi.objectId = require("joi-objectid")(Joi)
-require("./startup/logging")()
+
+require("./startup/logging")() // first
 require("./startup/routes")(app)
 require("./startup/db")()
 
