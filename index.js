@@ -8,11 +8,7 @@ Joi.objectId = require("joi-objectid")(Joi)
 require("./startup/logging")() // first
 require("./startup/routes")(app)
 require("./startup/db")()
-
-if (!config.get("jwtPrivateKey")) {
-  console.log("FATAL ERROR: jwtPrivateKey is not defined.")
-  process.exit(1)
-}
+require("./startup/config")()
 
 const port = process.env.PORT || 3000
 app.listen(port, () => console.log(`Listening on port ${port}...`))
