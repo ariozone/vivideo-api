@@ -1,5 +1,4 @@
 const express = require("express")
-const mongoose = require("mongoose")
 const app = express()
 const Joi = require("joi")
 Joi.objectId = require("joi-objectid")(Joi)
