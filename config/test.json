@@ -1,3 +1,4 @@
 {
-  "jwtPrivateKey": "test"
+  "jwtPrivateKey": "test",
+  "db": "mongodb://localhost/vivideo"
 }
