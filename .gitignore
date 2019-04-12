@@ -1,1 +1,4 @@
+.DS_Store
 node_modules/
+uncaught-exception.log
+logs.log
