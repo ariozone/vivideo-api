@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --watchAll --verbose --coverage"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
     "express-async-errors": "^3.1.1",
     "fawn": "^2.1.5",
     "install": "^0.12.2",
+    "jest": "^24.7.1",
     "joi": "^14.3.1",
     "joi-objectid": "^2.0.0",
     "joi-password-complexity": "^2.0.1",
