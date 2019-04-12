@@ -1,0 +1,8 @@
+{"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-12T22:25:24.141Z"}
+{"level":"info","message":"Connected to ${db}...","timestamp":"2019-04-12T22:25:24.186Z"}
+{"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-12T22:25:46.739Z"}
+{"level":"info","message":"Connected to mongodb://localhost/vivideo...","timestamp":"2019-04-12T22:25:46.785Z"}
+{"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-12T22:26:39.147Z"}
+{"level":"info","message":"Connected to mongodb://localhost/vivideo...","timestamp":"2019-04-12T22:26:39.192Z"}
+{"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-12T22:27:29.803Z"}
+{"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-12T22:27:29.848Z"}
