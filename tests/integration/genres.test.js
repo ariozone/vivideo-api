@@ -9,6 +9,9 @@ describe("/api/genres", () => {
     server.close()
   })
   describe("genres.GET/", () => {
-    it("should return all genres.", () => {})
+    it("should return all genres.", async () => {
+      const response = await request(server).get("/api/genres")
+      expect(response.status).toBe(200)
+    })
   })
 })
