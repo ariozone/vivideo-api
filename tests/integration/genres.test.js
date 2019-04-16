@@ -38,7 +38,7 @@ describe("/api/genres", () => {
       await genre.save()
       const response = await request(server).get("/api/genres/" + genre._id)
       expect(response.status).toBe(200)
-      expect(response.body).toHaveProperty("name", "genre1")
+      expect(response.body).toHaveProperty("name", genre.name)
     })
   })
 })
