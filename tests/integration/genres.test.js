@@ -1,5 +1,6 @@
 const request = require("supertest")
 const { Genre } = require("../../models/genre")
+const mongoose = require("mongoose")
 let server
 
 describe("/api/genres", () => {
@@ -32,9 +33,11 @@ describe("/api/genres", () => {
   describe("genres.GET/:id", () => {
     it("should return the genre if id is valid", async () => {
       const genre = new Genre({
-        _id: 1,
-        name: genre1
+        name: "genre1"
       })
+      await genre.save()
+      const response = await request(server).get("/api/genres/" + genre._id)
+      expect(response.body).toMatchObject(genre)
     })
   })
 })
