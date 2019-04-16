@@ -6,17 +6,25 @@ describe("/api/genres", () => {
   beforeEach(() => {
     server = require("../../index")
   })
-  afterEach(() => {
+  afterEach(async () => {
     server.close()
+    await Genre.remove({})
   })
   describe("genres.GET/", () => {
     it("should return all genres.", async () => {
-      const genre1 = await new Genre({ name: "genre1" })
-      const genre2 = await new Genre({ name: "genre2" })
-      await genre1.save()
-      await genre2.save()
+      // Instead of this:
+      // const genre1 = await new Genre({ name: "genre1" })
+      // const genre2 = await new Genre({ name: "genre2" })
+      // await genre1.save()
+      // await genre2.save()
+      //We can add multiple documents to mongodb in one go:
+      await Genre.collection.insertMany([
+        { name: "genre1" },
+        { name: "genre2" }
+      ])
       const response = await request(server).get("/api/genres")
       expect(response.status).toBe(200)
+      expect(response.body.length).toBe(2)
     })
   })
 })
