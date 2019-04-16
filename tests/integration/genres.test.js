@@ -33,12 +33,18 @@ describe("/api/genres", () => {
   describe("genres.GET/:id", () => {
     it("should return the genre if id is valid", async () => {
       const genre = new Genre({
+        // MongoDB assigns an '_id' itself
         name: "genre1"
       })
       await genre.save()
       const response = await request(server).get("/api/genres/" + genre._id)
       expect(response.status).toBe(200)
       expect(response.body).toHaveProperty("name", genre.name)
+    })
+    it("should return 404 if the id is invalid.", async () => {
+      // no need to create genre to test valid id.
+      const response = await request(server).get("api/gernes/1")
+      expect(response.status).toBe(404)
     })
   })
 })
