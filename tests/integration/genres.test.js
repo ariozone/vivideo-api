@@ -29,4 +29,12 @@ describe("/api/genres", () => {
       expect(response.body.some(genre => genre.name === "genre1")).toBeTruthy()
     })
   })
+  describe("genres.GET/:id", () => {
+    it("should return the genre if id is valid", async () => {
+      const genre = new Genre({
+        _id: 1,
+        name: genre1
+      })
+    })
+  })
 })
