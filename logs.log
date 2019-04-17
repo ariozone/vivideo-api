@@ -84,3 +84,21 @@
 {"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-16T22:44:56.691Z"}
 {"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-16T22:46:04.350Z"}
 {"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-16T22:46:04.406Z"}
+{"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-17T23:00:04.165Z"}
+{"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-17T23:00:04.218Z"}
+{"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-17T23:09:43.085Z"}
+{"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-17T23:09:43.128Z"}
+{"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-17T23:16:24.601Z"}
+{"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-17T23:16:24.643Z"}
+{"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-17T23:16:51.196Z"}
+{"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-17T23:16:51.248Z"}
+{"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-17T23:18:26.109Z"}
+{"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-17T23:18:26.141Z"}
+{"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-17T23:18:54.358Z"}
+{"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-17T23:18:54.390Z"}
+{"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-17T23:19:17.787Z"}
+{"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-17T23:19:17.819Z"}
+{"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-17T23:19:52.084Z"}
+{"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-17T23:19:52.127Z"}
+{"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-17T23:21:53.015Z"}
+{"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-17T23:21:53.074Z"}

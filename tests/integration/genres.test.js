@@ -41,9 +41,10 @@ describe("/api/genres", () => {
       expect(response.status).toBe(200)
       expect(response.body).toHaveProperty("name", genre.name)
     })
+
     it("should return 404 if the id is invalid.", async () => {
-      // no need to create genre to test valid id.
-      const response = await request(server).get("api/gernes/1")
+      // no need to create genre to test a valid id.
+      const response = await request(server).get("/api/gernes/1")
       expect(response.status).toBe(404)
     })
   })
