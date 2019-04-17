@@ -42,9 +42,15 @@ describe("/api/genres", () => {
       expect(response.body).toHaveProperty("name", genre.name)
     })
 
-    it("should return 404 if the id is invalid.", async () => {
+    it("should return 404 if the id is not valid.", async () => {
       // no need to create genre to test a valid id.
       const response = await request(server).get("/api/gernes/1")
+      expect(response.status).toBe(404)
+    })
+
+    it("should return 404 if no genre with the given id exists.", async () => {
+      const id = mongoose.Types.ObjectId()
+      const response = await request(server).get("/api/genres/" + id)
       expect(response.status).toBe(404)
     })
   })
