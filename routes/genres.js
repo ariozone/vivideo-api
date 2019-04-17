@@ -1,10 +1,11 @@
 const auth = require("../middleware/authorization")
 const admin = require("../middleware/admin")
 const express = require("express")
-// Using router object instead; Because routes are in seperate modules.
-const router = express.Router()
 const mongoose = require("mongoose")
 const { Genre, validate } = require("../models/genre")
+const validateObjectId = require("../middleware/validateObjectId")
+// Using router object instead; Because routes are in seperate modules.
+const router = express.Router()
 router.use(express.json())
 
 router.get("/", async (req, res) => {
@@ -14,9 +15,7 @@ router.get("/", async (req, res) => {
   res.send(genres)
 })
 
-router.get("/:id", async (req, res) => {
-  if (!mongoose.Types.ObjectId.isValid(req.params.id))
-    return res.status(404).send("Id is not valid.")
+router.get("/:id", validateObjectId, async (req, res) => {
   const genre = await Genre.findById(req.params.id)
   !genre
     ? res.status(404).send("Genre with the given ID does not exist.")
@@ -32,7 +31,7 @@ router.post("/", auth, async (req, res) => {
   res.send(genre)
 })
 
-router.put("/:id", auth, async (req, res) => {
+router.put("/:id", [validateObjectId, auth], async (req, res) => {
   const { error } = validate(req.body)
   if (error) return res.status(400).send(error.details[0].message)
 
@@ -47,7 +46,7 @@ router.put("/:id", auth, async (req, res) => {
   res.send(genre)
 })
 
-router.delete("/:id", [auth, admin], async (req, res) => {
+router.delete("/:id", [validateObjectId, auth, admin], async (req, res) => {
   const genre = await Genre.findByIdAndRemove(req.params.id)
 
   if (!genre)
