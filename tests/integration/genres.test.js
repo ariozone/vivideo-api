@@ -65,6 +65,7 @@ describe("/api/genres", () => {
         .send({ name: "genre1" })
       expect(response.status).toBe(401)
     })
+
     it("should return 400 if the genre is less than 3 characters.", async () => {
       const token = new User().generateToken()
       const response = await request(server)
@@ -73,6 +74,7 @@ describe("/api/genres", () => {
         .send({ name: "g1" })
       expect(response.status).toBe(400)
     })
+
     it("should return 400 if genre is more than 50 characters.", async () => {
       const token = new User().generateToken()
       const name = new Array(52).join("a")
@@ -82,6 +84,7 @@ describe("/api/genres", () => {
         .send({ name })
       expect(response.status).toBe(400)
     })
+
     it("should save the genre if it is valid.", async () => {
       const token = new User().generateToken()
       await request(server)
@@ -91,6 +94,7 @@ describe("/api/genres", () => {
       const genre = await Genre.find({ name: "genre1" })
       expect(genre).not.toBe(null)
     })
+
     it("should return the genre if it is valid.", async () => {
       const token = new User().generateToken()
       const response = await request(server)
@@ -98,7 +102,6 @@ describe("/api/genres", () => {
         .set("x-auth-token", token)
         .send({ name: "genre1" })
       expect(response.body).toHaveProperty("_id") // _id indicates the existance
-      expect(response.body).toHaveProperty("name", "genre1")
     })
   })
 })
