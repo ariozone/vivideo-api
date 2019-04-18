@@ -128,3 +128,5 @@
 {"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-18T00:51:06.814Z"}
 {"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-18T00:52:23.457Z"}
 {"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-18T00:52:23.524Z"}
+{"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-18T01:29:32.585Z"}
+{"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-18T01:29:32.642Z"}
