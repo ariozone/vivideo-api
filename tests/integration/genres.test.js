@@ -11,7 +11,7 @@ describe("/api/genres", () => {
     server.close()
     await Genre.remove({})
   })
-  describe("genres.GET/", () => {
+  describe("genres.GET /", () => {
     it("should return all genres.", async () => {
       // Instead of this:
       // const genre1 = await new Genre({ name: "genre1" })
@@ -30,7 +30,7 @@ describe("/api/genres", () => {
       expect(response.body.some(genre => genre.name === "genre1")).toBeTruthy()
     })
   })
-  describe("genres.GET/:id", () => {
+  describe("genres.GET /:id", () => {
     it("should return the genre if id is valid", async () => {
       const genre = new Genre({
         // MongoDB assigns an '_id' itself
@@ -52,6 +52,14 @@ describe("/api/genres", () => {
       const id = mongoose.Types.ObjectId()
       const response = await request(server).get("/api/genres/" + id)
       expect(response.status).toBe(404)
+    })
+  })
+  describe("genres.POST /", () => {
+    it("should return 401 if the user is not logged in.", async () => {
+      const response = await request(server)
+        .post("/api/genres")
+        .send({ name: "genre1" })
+      expect(response.status).toBe(401)
     })
   })
 })
