@@ -12,6 +12,7 @@ describe("/api/genres", () => {
     server.close()
     await Genre.remove({})
   })
+
   describe("genres.GET /", () => {
     it("should return all genres.", async () => {
       // Instead of this:
@@ -31,6 +32,7 @@ describe("/api/genres", () => {
       expect(response.body.some(genre => genre.name === "genre1")).toBeTruthy()
     })
   })
+
   describe("genres.GET /:id", () => {
     it("should return the genre if id is valid", async () => {
       const genre = new Genre({
@@ -55,6 +57,7 @@ describe("/api/genres", () => {
       expect(response.status).toBe(404)
     })
   })
+
   describe("genres.POST /", () => {
     it("should return 401 if the user is not logged in.", async () => {
       const response = await request(server)
@@ -78,6 +81,15 @@ describe("/api/genres", () => {
         .set("x-auth-token", token)
         .send({ name })
       expect(response.status).toBe(400)
+    })
+    it("should save the genre if it is valid.", async () => {
+      const token = new User().generateToken()
+      const response = await request(server)
+        .post("/api/genres")
+        .set("x-auth-token", token)
+        .send({ name: "genre1" })
+      const gerne = await Genre.find({ name: "genre1" })
+      expect(response).not.toBe(null)
     })
   })
 })
