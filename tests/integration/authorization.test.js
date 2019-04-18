@@ -6,9 +6,10 @@ describe("authorization middleware", () => {
   beforeEach(() => {
     server = require("../../index")
   })
+
   afterEach(async () => {
-    server.close()
     await Genre.remove({})
+    server.close()
   })
 
   it("should return 401 if no token is provided.", async () => {
@@ -22,7 +23,7 @@ describe("authorization middleware", () => {
     const response = await request(server)
       .post("/api/genres")
       .set("x-auth-token", 1)
-      .send({ name: "genr1" })
+      .send({ name: "genre1" })
     expect(response.status).toBe(400)
   })
 
