@@ -145,3 +145,13 @@
 {"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-18T01:55:05.392Z"}
 {"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-18T01:55:54.672Z"}
 {"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-18T01:55:54.728Z"}
+{"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-18T20:59:27.945Z"}
+{"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-18T20:59:28.002Z"}
+{"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-18T20:59:57.741Z"}
+{"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-18T20:59:57.797Z"}
+{"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-18T21:05:15.807Z"}
+{"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-18T21:05:15.872Z"}
+{"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-18T21:06:19.834Z"}
+{"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-18T21:06:19.894Z"}
+{"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-18T21:07:20.122Z"}
+{"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-18T21:07:20.194Z"}
