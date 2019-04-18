@@ -102,6 +102,7 @@ describe("/api/genres", () => {
         .set("x-auth-token", token)
         .send({ name: "genre1" })
       expect(response.body).toHaveProperty("_id") // _id indicates the existance
+      expect(response.body).toHaveProperty("name", "genre1")
     })
   })
 })
