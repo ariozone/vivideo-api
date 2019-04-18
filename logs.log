@@ -165,3 +165,7 @@
 {"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-18T21:24:41.212Z"}
 {"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-18T21:30:22.757Z"}
 {"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-18T21:30:22.801Z"}
+{"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-18T21:43:41.484Z"}
+{"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-18T21:43:41.532Z"}
+{"level":"info","message":"Listening on port 3000...","timestamp":"2019-04-18T21:43:41.714Z"}
+{"level":"info","message":"Connected to mongodb://localhost/vivideo_tests...","timestamp":"2019-04-18T21:43:41.808Z"}
