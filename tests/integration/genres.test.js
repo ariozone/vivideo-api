@@ -1,5 +1,6 @@
 const request = require("supertest")
 const { Genre } = require("../../models/genre")
+const {User} = require('../../models/user')
 const mongoose = require("mongoose")
 let server
 
@@ -60,6 +61,10 @@ describe("/api/genres", () => {
         .post("/api/genres")
         .send({ name: "genre1" })
       expect(response.status).toBe(401)
+    })
+    it('should return 400 if the genre is less than 3 characters.', () => {
+      const token = new User().generateToken()
+      const response = await request(server)
     })
   })
 })
