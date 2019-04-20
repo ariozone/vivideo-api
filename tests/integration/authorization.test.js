@@ -3,6 +3,7 @@ const { Genre } = require("../../models/genre")
 const { User } = require("../../models/user")
 
 describe("authorization middleware", () => {
+  let server
   beforeEach(() => {
     server = require("../../index")
   })
