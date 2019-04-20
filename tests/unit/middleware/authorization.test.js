@@ -14,5 +14,6 @@ describe("authorization middleware", () => {
     const next = jest.fn()
 
     auth(req, res, next)
+    expect(req.user).toBeDefined()
   })
 })
