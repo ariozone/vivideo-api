@@ -138,5 +138,13 @@ describe("/api/genres", () => {
         .send({ name })
       expect(response.status).toBe(400)
     })
+    it("should return 404 if the id is not valid.", async () => {
+      const token = new User().generateToken()
+      const response = await request(server)
+        .put("/api/genres/1")
+        .set("x-auth-token", token)
+        .send({ name: "genre1" })
+      expect(response.status).toBe(404)
+    })
   })
 })
