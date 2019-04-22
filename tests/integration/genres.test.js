@@ -117,11 +117,13 @@ describe("/api/genres", () => {
     it("should return 400 if the new genre input is invalid.", async () => {
       const token = new User().generateToken()
       const id = mongoose.Types.ObjectId()
-      const genre = new Genre({ _id: id, name: "" })
+      const genre1 = new Genre({ _id: id, name: "genre1" })
+      await genre1.save()
+
       const response = await request(server)
         .put("/api/genres/" + id)
         .set("x-auth-token", token)
-        .send(genre)
+        .send({ name: "g2" })
       expect(response.status).toBe(400)
     })
   })
