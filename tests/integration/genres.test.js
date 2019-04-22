@@ -114,7 +114,7 @@ describe("/api/genres", () => {
       const response = await request(server).put("/api/genres/" + id)
       expect(response.status).toBe(401)
     })
-    it("should return 400 if the new genre input is invalid.", async () => {
+    it("should return 400 if the new genre name is less than 3 characters.", async () => {
       const token = new User().generateToken()
       const id = mongoose.Types.ObjectId()
       const genre1 = new Genre({ _id: id, name: "genre1" })
@@ -124,6 +124,18 @@ describe("/api/genres", () => {
         .put("/api/genres/" + id)
         .set("x-auth-token", token)
         .send({ name: "g2" })
+      expect(response.status).toBe(400)
+    })
+    it("should return 400 if the new genre name is more than 50 characters.", async () => {
+      const token = new User().generateToken()
+      const id = mongoose.Types.ObjectId()
+      const genre = new Genre({ _id: id, name: "genre1" })
+      await genre.save()
+      const name = new Array(52).join("a")
+      const response = await request(server)
+        .put("/api/genres/" + id)
+        .set("x-auth-token", token)
+        .send({ name })
       expect(response.status).toBe(400)
     })
   })
