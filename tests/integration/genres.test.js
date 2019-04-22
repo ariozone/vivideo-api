@@ -158,5 +158,18 @@ describe("/api/genres", () => {
         .send({ name: "genre2" })
       expect(response.status).toBe(404)
     })
+    it("should update the genre in database if input is valid.", async () => {
+      const token = new User().generateToken()
+      const genre = new Genre({ name: "genre1" })
+      await genre.save()
+      const id = genre._id
+      const response = await request(server)
+        .put("/api/genres/" + id)
+        .set("x-auth-token", token)
+        .send({ name: "genre2" })
+      const newGenre = await Genre.findById(id)
+      expect(newGenre.name).toBe("genre2")
+      expect(response.status).toBe(200)
+    })
   })
 })
