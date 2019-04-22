@@ -2,9 +2,9 @@ const request = require("supertest")
 const { Genre } = require("../../models/genre")
 const { User } = require("../../models/user")
 const mongoose = require("mongoose")
-let server
 
 describe("/api/genres", () => {
+  let server
   beforeEach(() => {
     server = require("../../index")
   })
@@ -103,6 +103,16 @@ describe("/api/genres", () => {
         .send({ name: "genre1" })
       expect(response.body).toHaveProperty("_id") // _id indicates the existance
       expect(response.body).toHaveProperty("name", "genre1")
+    })
+  })
+
+  describe("genre.PUT /:id", () => {
+    it("should return 401 if the user is not logged in.", async () => {
+      const id = mongoose.Types.ObjectId()
+      const genre = new Genre({ _id: id, name: "genre1" })
+      await genre.save()
+      const response = await request(server).put("/api/genres/" + id)
+      expect(response.status).toBe(401)
     })
   })
 })
