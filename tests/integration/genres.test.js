@@ -9,7 +9,7 @@ describe("/api/genres", () => {
     server = require("../../index")
   })
   afterEach(async () => {
-    server.close()
+    await server.close()
     await Genre.remove({})
   })
 
@@ -182,6 +182,14 @@ describe("/api/genres", () => {
         .send({ name: "genre2" })
       expect(response.body).toHaveProperty("_id")
       expect(response.body).toHaveProperty("name", "genre2")
+    })
+  })
+
+  describe("genre.DELETE /:id", () => {
+    it("should return 401 if the user is not logged in.", async () => {
+      const id = mongoose.Types.ObjectId()
+      const response = await request(server).delete("/api/genres/" + id)
+      expect(response.status).toBe(401)
     })
   })
 })
