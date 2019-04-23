@@ -206,5 +206,13 @@ describe("/api/genres", () => {
         .set("x-auth-token", token)
       expect(response.status).toBe(404)
     })
+    it("should return 404 if genre with the given valid id does not exist.", async () => {
+      const token = new User({ isAdmin: true }).generateToken()
+      const id = mongoose.Types.ObjectId()
+      const response = await request(server)
+        .delete("/api/genres/" + id)
+        .set("x-auth-token", token)
+      expect(response.status).toBe(404)
+    })
   })
 })

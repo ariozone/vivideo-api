@@ -50,7 +50,7 @@ router.delete("/:id", [validateObjectId, auth, admin], async (req, res) => {
   const genre = await Genre.findByIdAndRemove(req.params.id)
 
   if (!genre)
-    return res.status(400).send("Genre with the given ID does not exist.")
+    return res.status(404).send("Genre with the given ID does not exist.")
   res.send(genre)
 })
 
