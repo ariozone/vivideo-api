@@ -214,5 +214,17 @@ describe("/api/genres", () => {
         .set("x-auth-token", token)
       expect(response.status).toBe(404)
     })
+    it("should delete the genre if input is valid.", async () => {
+      const token = new User({ isAdmin: true }).generateToken()
+      const genre = new Genre({ name: "genre1" })
+      await genre.save()
+      const id = genre._id
+      const response = await request(server)
+        .delete("/api/genres/" + id)
+        .set("x-auth-token", token)
+      const genreInDb = await Genre.findById(id)
+      expect(response.status).toBe(200)
+      expect(genreInDb).toBeNull()
+    })
   })
 })
