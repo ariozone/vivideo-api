@@ -199,5 +199,12 @@ describe("/api/genres", () => {
         .set("x-auth-token", token)
       expect(response.status).toBe(403)
     })
+    it("should return 404 if the id is invalid.", async () => {
+      const token = new User({ isAdmin: true }).generateToken()
+      const response = await request(server)
+        .delete("/api/genres/1")
+        .set("x-auth-token", token)
+      expect(response.status).toBe(404)
+    })
   })
 })
