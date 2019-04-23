@@ -191,5 +191,13 @@ describe("/api/genres", () => {
       const response = await request(server).delete("/api/genres/" + id)
       expect(response.status).toBe(401)
     })
+    it("should return 403 if the logged in user is not an admin.", async () => {
+      const token = new User().generateToken()
+      const id = mongoose.Types.ObjectId()
+      const response = await request(server)
+        .delete("/api/genres/" + id)
+        .set("x-auth-token", token)
+      expect(response.status).toBe(403)
+    })
   })
 })
