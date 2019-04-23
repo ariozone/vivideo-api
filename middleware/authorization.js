@@ -12,7 +12,7 @@ function auth(req, res, next) {
     // Verifying token
     const decodedPayload = jwt.verify(token, config.get("jwtPrivateKey"))
     // Adding a user property to request body so that in the future we can access the _id property from the request.
-    req.user = decodedPayload
+    req.user = decodedPayload // Unit test this
     // Passing control to the next middleware function
     next()
   } catch (ex) {
