@@ -3,10 +3,10 @@ const { Rental } = require("../../models/rental")
 const mongoose = require("mongoose")
 describe("Returns Api", () => {
   let server
-
+  let rental
   beforeEach(async () => {
     server = require("../../index")
-    const rental = new Rental({
+    rental = new Rental({
       customer: {
         _id: mongoose.Types.ObjectId(), //neet id for tests
         name: "123",
@@ -25,5 +25,8 @@ describe("Returns Api", () => {
     await server.close()
     await Rental.remove({})
   })
-  it("should test the returns api.", () => {})
+  it("should test the returns api.", async () => {
+    const response = await Rental.findById(rental._id)
+    expect(response.body).not.toBeNull()
+  })
 })
