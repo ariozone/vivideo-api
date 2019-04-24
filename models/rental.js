@@ -1,7 +1,6 @@
 const mongoose = require("mongoose")
 const Joi = require("joi")
 
-
 const rentalSchema = new mongoose.Schema({
   customer: {
     // Creating a custom schema because we don't need all customer proterties.
@@ -58,10 +57,11 @@ const rentalSchema = new mongoose.Schema({
   }
 })
 
-const Rental = mongoose.model('Rental', rentalSchema)
+const Rental = mongoose.model("Rental", rentalSchema)
 
 function validateRental(rental) {
-  const schema = {   //string() replaced by objectId()
+  const schema = {
+    //string() replaced by objectId()
     customerId: Joi.objectId().required(),
     movieId: Joi.objectId().required()
   }
