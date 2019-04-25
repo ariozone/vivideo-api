@@ -2,6 +2,7 @@ const request = require("supertest")
 const { Rental } = require("../../models/rental")
 const { User } = require("../../models/user")
 const mongoose = require("mongoose")
+const moment = require("moment")
 describe("Returns Api", () => {
   let server
   let rental
@@ -83,8 +84,9 @@ describe("Returns Api", () => {
       .send({ customerId, movieId })
     expect(response.status).toBe(200)
   })
+
   it("should assign a return date if request is valid.", async () => {
-    const response = await request(server)
+    await request(server)
       .set("x-auth-token", token)
       .send({ customerId, movieId })
     const rentalInDb = await Rental.findById(rental._id)
