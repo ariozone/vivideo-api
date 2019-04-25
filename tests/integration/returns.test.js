@@ -1,19 +1,24 @@
 const request = require("supertest")
 const { Rental } = require("../../models/rental")
 const { User } = require("../../models/user")
+const { Movie } = require("../../models/movie")
 const mongoose = require("mongoose")
 const moment = require("moment")
+
 describe("Returns Api", () => {
   let server
   let rental
+  let movie
   let customerId
   let movieId
-  let token = new User().generateToken()
+  let token
+
   beforeEach(async () => {
     server = require("../../index")
-    customerId = mongoose.Types.ObjectId() //neet id for tests
+    customerId = mongoose.Types.ObjectId() //need id for tests
     movieId = mongoose.Types.ObjectId()
     token = new User().generateToken()
+
     rental = new Rental({
       customer: {
         _id: customerId,
@@ -26,7 +31,11 @@ describe("Returns Api", () => {
         dailyRentalRate: 1
       }
     })
+
+    movie = new Movie({})
+
     await rental.save()
+    await movie.save()
   })
 
   afterEach(async () => {
