@@ -9,8 +9,8 @@ describe("Returns Api", () => {
   let movieId
   beforeEach(async () => {
     server = require("../../index")
-    ;(customerId = mongoose.Types.ObjectId()), //neet id for tests
-      (movieId = mongoose.Types.ObjectId())
+    customerId = mongoose.Types.ObjectId() //neet id for tests
+    movieId = mongoose.Types.ObjectId()
     rental = new Rental({
       customer: {
         _id: customerId,
@@ -51,5 +51,14 @@ describe("Returns Api", () => {
       .set("x-auth-token", token)
       .send({ customerId })
     expect(response.status).toBe(400)
+  })
+  it("should return 404 if no rental exist for customer/movie.", async () => {
+    await Rental.remove({}) // clear the created rental first
+    const token = new User().generateToken()
+    const response = await request(server)
+      .post("/api/returns")
+      .set("x-auth-token", token)
+      .send({ customerId, movieId })
+    expect(response.status).toBe(404)
   })
 })
