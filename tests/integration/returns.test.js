@@ -44,4 +44,12 @@ describe("Returns Api", () => {
       .send({ movieId })
     expect(response.status).toBe(400)
   })
+  it("should return 400 if the movieId is not provided.", async () => {
+    const token = new User().generateToken()
+    const response = await request(server)
+      .post("/api/returns")
+      .set("x-auth-token", token)
+      .send({ customerId })
+    expect(response.status).toBe(400)
+  })
 })
