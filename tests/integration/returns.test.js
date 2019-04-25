@@ -33,10 +33,11 @@ describe("Returns Api", () => {
     })
 
     movie = new Movie({
+      _id: movieId,
       title: "12",
       genre: { name: "123" },
       numberInStock: 10,
-      dailyRentalRate: 2
+      dailyRentalRate: 1
     })
 
     await rental.save()
