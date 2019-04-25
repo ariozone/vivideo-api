@@ -134,4 +134,25 @@ describe("Returns Api", () => {
     const movieInDb = await Movie.findById(movieId)
     expect(movieInDb.numberInStock).toBe(movie.numberInStock + 1)
   })
+
+  it("should return the rental in the body of the response.", async () => {
+    const response = await request(server)
+      .post("/api/returns")
+      .set("x-auth-token", token)
+      .send({ customerId, movieId })
+    const rentalInDb = await Rental.findById(rental._id)
+
+    expect(response.body).toHaveProperty("dateOut")
+    expect(response.body).toHaveProperty("dateBack")
+
+    expect(response.body).toHaveProperty("customer", rentalInDb.customer)
+    expect(response.body).toHaveProperty("movie", rentalInDb.movie)
+    expect(response.body).toHaveProperty("rentalFee", rentalInDb.rentalFee)
+    // or
+    expect(response.body).toMatchObject({
+      customer: rentalInDb.customer,
+      movie: rentalInDb.movie,
+      rentalFee: rentalInDb.rentalFee
+    })
+  })
 })
