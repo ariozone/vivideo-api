@@ -32,6 +32,7 @@ describe("Returns Api", () => {
     await server.close()
     await Rental.remove({})
   })
+
   it("should return 401 if the user is not logged in.", async () => {
     token = ""
     const response = await request(server)
@@ -39,6 +40,7 @@ describe("Returns Api", () => {
       .send({})
     expect(response.status).toBe(401)
   })
+
   it("should return 400 if the customerId is not provided.", async () => {
     const response = await request(server)
       .post("/api/returns")
@@ -46,6 +48,7 @@ describe("Returns Api", () => {
       .send({ movieId })
     expect(response.status).toBe(400)
   })
+
   it("should return 400 if the movieId is not provided.", async () => {
     const response = await request(server)
       .post("/api/returns")
@@ -53,6 +56,7 @@ describe("Returns Api", () => {
       .send({ customerId })
     expect(response.status).toBe(400)
   })
+
   it("should return 404 if no rental exist for customer/movie.", async () => {
     await Rental.remove({}) // clear the created rental first
     const response = await request(server)
@@ -61,6 +65,7 @@ describe("Returns Api", () => {
       .send({ customerId, movieId })
     expect(response.status).toBe(404)
   })
+
   it("should return 400 if the rental is already processed", async () => {
     rental.dateBack = new Date()
     await rental.save()
@@ -69,5 +74,13 @@ describe("Returns Api", () => {
       .set("x-auth-token", token)
       .send({ customerId, movieId })
     expect(response.status).toBe(400)
+  })
+
+  it("should return 200 if the request is valid.", async () => {
+    const response = await request(server)
+      .post("/api/returns")
+      .set("x-auth-token", token)
+      .send({ customerId, movieId })
+    expect(response.status).toBe(200)
   })
 })
