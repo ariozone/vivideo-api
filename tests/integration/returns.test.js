@@ -83,4 +83,14 @@ describe("Returns Api", () => {
       .send({ customerId, movieId })
     expect(response.status).toBe(200)
   })
+  it("should assign a return date if request is valid.", async () => {
+    const response = await request(server)
+      .set("x-auth-token", token)
+      .send({ customerId, movieId })
+    const rentalInDb = await Rental.findById(rental._id)
+    const date = new Date()
+    const timeAmount = date - rentalInDb.dateBack
+    expect(rentalInDb.dateBack).toBeDefined()
+    expect(timeAmount).toBeLessThan(10000)
+  })
 })
