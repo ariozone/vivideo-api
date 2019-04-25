@@ -95,4 +95,18 @@ describe("Returns Api", () => {
     expect(rentalInDb.dateBack).toBeDefined()
     expect(timeAmount).toBeLessThan(10000)
   })
+
+  it("should return the rental fee if input is valid.", async () => {
+    rental.dateOut = moment()
+      .add(-7, "days")
+      .toDate() //returns moment object for 7 days before, then converts it to js date object
+    await rental.save()
+    await request(server)
+      .post("/api/returns")
+      .set("a-auth-token", token)
+      .send({ customerId, movieId })
+    const rentalInDb = await Rental.findById(rental._id)
+    expect(rentalInDb.rentalFee).toBeDefined()
+    expect(rentalInDb.rentalFee).toBe(7 * rentalInDb.dailyRentalRate)
+  })
 })
