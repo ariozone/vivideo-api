@@ -1,19 +1,24 @@
 const request = require("supertest")
 const { Rental } = require("../../models/rental")
+const { User } = require("../../models/user")
 const mongoose = require("mongoose")
 describe("Returns Api", () => {
   let server
   let rental
+  let customerId
+  let movieId
   beforeEach(async () => {
     server = require("../../index")
+    ;(customerId = mongoose.Types.ObjectId()), //neet id for tests
+      (movieId = mongoose.Types.ObjectId())
     rental = new Rental({
       customer: {
-        _id: mongoose.Types.ObjectId(), //neet id for tests
+        _id: customerId,
         name: "123",
         contact: "12345"
       },
       movie: {
-        _id: mongoose.Types.ObjectId(),
+        _id: movieId,
         title: "123",
         dailyRentalRate: 1
       }
@@ -25,8 +30,10 @@ describe("Returns Api", () => {
     await server.close()
     await Rental.remove({})
   })
-  it("should test the returns api.", async () => {
-    const response = await Rental.findById(rental._id)
-    expect(response.body).not.toBeNull()
+  it("should return 401 if the user is not logged in.", async () => {
+    const response = await request(server)
+      .post("/api/returns")
+      .send({})
+    expect(response.status).toBe(401)
   })
 })
