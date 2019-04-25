@@ -7,10 +7,12 @@ describe("Returns Api", () => {
   let rental
   let customerId
   let movieId
+  let token = new User().generateToken()
   beforeEach(async () => {
     server = require("../../index")
     customerId = mongoose.Types.ObjectId() //neet id for tests
     movieId = mongoose.Types.ObjectId()
+    token = new User().generateToken()
     rental = new Rental({
       customer: {
         _id: customerId,
@@ -31,13 +33,13 @@ describe("Returns Api", () => {
     await Rental.remove({})
   })
   it("should return 401 if the user is not logged in.", async () => {
+    token = ""
     const response = await request(server)
       .post("/api/returns")
       .send({})
     expect(response.status).toBe(401)
   })
   it("should return 400 if the customerId is not provided.", async () => {
-    const token = new User().generateToken()
     const response = await request(server)
       .post("/api/returns")
       .set("x-auth-token", token)
@@ -45,7 +47,6 @@ describe("Returns Api", () => {
     expect(response.status).toBe(400)
   })
   it("should return 400 if the movieId is not provided.", async () => {
-    const token = new User().generateToken()
     const response = await request(server)
       .post("/api/returns")
       .set("x-auth-token", token)
@@ -54,11 +55,19 @@ describe("Returns Api", () => {
   })
   it("should return 404 if no rental exist for customer/movie.", async () => {
     await Rental.remove({}) // clear the created rental first
-    const token = new User().generateToken()
     const response = await request(server)
       .post("/api/returns")
       .set("x-auth-token", token)
       .send({ customerId, movieId })
     expect(response.status).toBe(404)
+  })
+  it("should return 400 if the rental is already processed", async () => {
+    rental.dateBack = new Date()
+    await rental.save()
+    const response = await request(server)
+      .post("/api/returns")
+      .set("x-auth-token", token)
+      .send({ customerId, movieId })
+    expect(response.status).toBe(400)
   })
 })
