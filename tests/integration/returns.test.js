@@ -32,7 +32,12 @@ describe("Returns Api", () => {
       }
     })
 
-    movie = new Movie({})
+    movie = new Movie({
+      title: "12",
+      genre: { name: "123" },
+      numberInStock: 10,
+      dailyRentalRate: 2
+    })
 
     await rental.save()
     await movie.save()
@@ -41,6 +46,7 @@ describe("Returns Api", () => {
   afterEach(async () => {
     await server.close()
     await Rental.remove({})
+    await Movie.remove({})
   })
 
   it("should return 401 if the user is not logged in.", async () => {
@@ -116,6 +122,6 @@ describe("Returns Api", () => {
       .send({ customerId, movieId })
     const rentalInDb = await Rental.findById(rental._id)
     expect(rentalInDb.rentalFee).toBeDefined()
-    expect(rentalInDb.rentalFee).toBe(7 * rentalInDb.dailyRentalRate)
+    expect(rentalInDb.rentalFee).toBe(7 * rentalInDb.movie.dailyRentalRate)
   })
 })
