@@ -125,4 +125,13 @@ describe("Returns Api", () => {
     expect(rentalInDb.rentalFee).toBeDefined()
     expect(rentalInDb.rentalFee).toBe(7 * rentalInDb.movie.dailyRentalRate)
   })
+
+  it("should add the movie to stock.", async () => {
+    await request(server)
+      .post("/api/returns")
+      .set("x-auth-token", token)
+      .send({ customerId, movieId })
+    const movieInDb = await Movie.findById(movieId)
+    expect(movieInDb.numberInStock).toBe(movie.numberInStock + 1)
+  })
 })
