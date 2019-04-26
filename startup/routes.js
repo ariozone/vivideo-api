@@ -5,6 +5,7 @@ const movies = require("../routes/movies")
 const rentals = require("../routes/rentals")
 const users = require("../routes/users")
 const logins = require("../routes/logins")
+const returns = require("../routes/returns")
 const error = require("../middleware/error")
 module.exports = function(app) {
   app.use(express.json())
@@ -14,5 +15,6 @@ module.exports = function(app) {
   app.use("/api/rentals", rentals)
   app.use("/api/users", users)
   app.use("/api/logins", logins)
+  app.use("/api/returns", returns)
   app.use(error)
 }
