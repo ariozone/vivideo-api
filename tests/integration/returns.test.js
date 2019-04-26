@@ -54,7 +54,7 @@ describe("Returns Api", () => {
     token = ""
     const response = await request(server)
       .post("/api/returns")
-      .send({})
+      .send({ customerId, movieId })
     expect(response.status).toBe(401)
   })
 
