@@ -15,6 +15,7 @@ router.post("/", async (req, res) => {
   })
   if (!rental)
     return res.status(404).send("No rental exist for this customer/movie.")
+  if (rental.dateBack) return res.status(400).send("Rental already processed!")
 
   res.status(401).send("Not authorized")
 })
