@@ -103,6 +103,7 @@ describe("Returns Api", () => {
 
   it("should assign a return date if request is valid.", async () => {
     await request(server)
+      .post("/api/returns")
       .set("x-auth-token", token)
       .send({ customerId, movieId })
     const rentalInDb = await Rental.findById(rental._id)
