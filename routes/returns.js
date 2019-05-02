@@ -21,6 +21,7 @@ router.post("/", auth, async (req, res) => {
   if (rental.dateBack)
     return res.sendStatus(400).send("Return already processed!")
 
+  rental.calculateReturn()
   await rental.save()
 
   const movie = await Movie.findById(rental.movie._id)
@@ -29,9 +30,10 @@ router.post("/", auth, async (req, res) => {
 
   return res.send(rental)
 })
+
 const schema = {
-  customerId: Joi.string().required(),
-  movieId: Joi.required()
+  movieId: Joi.objectId().required(),
+  customerId: Joi.objectId().required()
 }
 const validate = function(requestBody) {
   return Joi.validate(requestBody, schema)
