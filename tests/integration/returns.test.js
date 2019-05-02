@@ -45,9 +45,9 @@ describe("Returns Api", () => {
   })
 
   afterEach(async () => {
+    await Rental.deleteMany({})
+    await Movie.deleteMany({})
     await server.close()
-    await Rental.remove({})
-    await Movie.remove({})
   })
 
   it("should return 401 if the user is not logged in.", async () => {
@@ -120,9 +120,10 @@ describe("Returns Api", () => {
     await rental.save()
     await request(server)
       .post("/api/returns")
-      .set("a-auth-token", token)
+      .set("x-auth-token", token)
       .send({ customerId, movieId })
     const rentalInDb = await Rental.findById(rental._id)
+
     expect(rentalInDb.rentalFee).toBeDefined()
     expect(rentalInDb.rentalFee).toBe(7 * rentalInDb.movie.dailyRentalRate)
   })
