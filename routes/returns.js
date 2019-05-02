@@ -33,7 +33,7 @@ router.post("/", auth, async (req, res) => {
   movie.numberInStock += 1
   await movie.save()
 
-  return res.sendStatus(200).send()
+  return res.send(rental)
 })
 
 module.exports = router
