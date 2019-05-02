@@ -1,5 +1,6 @@
 const mongoose = require("mongoose")
 const Joi = require("joi")
+const moment = require("moment")
 
 const rentalSchema = new mongoose.Schema({
   customer: {
@@ -56,6 +57,12 @@ const rentalSchema = new mongoose.Schema({
     min: 0
   }
 })
+
+rentalSchema.methods.calculateReturn = function() {
+  this.dateBack = new Date()
+  const daysInRent = moment().diff(this.dateOut, "days")
+  this.rentalFee = daysInRent * this.movie.dailyRentalRate
+}
 
 const Rental = mongoose.model("Rental", rentalSchema)
 

@@ -1,16 +1,14 @@
+const Joi = require("joi")
+Joi.objectId = require("joi-objectid")(Joi)
 const { Rental } = require("../models/rental")
 const { Movie } = require("../models/movie")
 const express = require("express")
 const router = express.Router()
 const auth = require("../middleware/authorization")
-const moment = require("moment")
-const Joi = require("joi")
 
 router.post("/", auth, async (req, res) => {
-  if (!req.body.customerId)
-    return res.sendStatus(400).send("Customer Id not provided.")
-  if (!req.body.movieId)
-    return res.sendStatus(400).send("Movie Id is not valid.")
+  const { error } = validate(req.body)
+  if (error) return res.sendStatus(400).send(error.details[0].message)
 
   const rental = await Rental.findOne({
     "customer._id": req.body.customerId,
@@ -23,9 +21,6 @@ router.post("/", auth, async (req, res) => {
   if (rental.dateBack)
     return res.sendStatus(400).send("Return already processed!")
 
-  rental.dateBack = new Date()
-  const daysInRent = moment().diff(rental.dateOut, "days")
-  rental.rentalFee = daysInRent * rental.movie.dailyRentalRate
   await rental.save()
 
   const movie = await Movie.findById(rental.movie._id)
@@ -35,15 +30,11 @@ router.post("/", auth, async (req, res) => {
   return res.send(rental)
 })
 const schema = {
-  customerId: Joi.objectId()
-    .string()
-    .required(),
-  movieId: Joi.objectId()
-    .string()
-    .required()
+  customerId: Joi.string().required(),
+  movieId: Joi.required()
 }
-const validate = function(request) {
-  return Joi.validate(request, schema)
+const validate = function(requestBody) {
+  return Joi.validate(requestBody, schema)
 }
 
 module.exports = router
