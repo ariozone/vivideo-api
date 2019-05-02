@@ -1,5 +1,6 @@
 const { User } = require("../models/user")
 const { Rental } = require("../models/rental")
+const { Movie } = require("../models/movie")
 const express = require("express")
 const router = express.Router()
 const mongoose = require("mongoose")
@@ -27,6 +28,10 @@ router.post("/", auth, async (req, res) => {
   const daysInRent = moment().diff(rental.dateOut, "days")
   rental.rentalFee = daysInRent * rental.movie.dailyRentalRate
   await rental.save()
+
+  const movie = await Movie.findById(rental.movie._id)
+  movie.numberInStock += 1
+  await movie.save()
 
   return res.sendStatus(200).send()
 })
