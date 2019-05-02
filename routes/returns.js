@@ -1,11 +1,10 @@
-const { User } = require("../models/user")
 const { Rental } = require("../models/rental")
 const { Movie } = require("../models/movie")
 const express = require("express")
 const router = express.Router()
-const mongoose = require("mongoose")
 const auth = require("../middleware/authorization")
 const moment = require("moment")
+const Joi = require("joi")
 
 router.post("/", auth, async (req, res) => {
   if (!req.body.customerId)
@@ -35,5 +34,16 @@ router.post("/", auth, async (req, res) => {
 
   return res.send(rental)
 })
+const schema = {
+  customerId: Joi.objectId()
+    .string()
+    .required(),
+  movieId: Joi.objectId()
+    .string()
+    .required()
+}
+const validate = function(request) {
+  return Joi.validate(request, schema)
+}
 
 module.exports = router
