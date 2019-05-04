@@ -1,4 +1,4 @@
 {
   "jwtPrivateKey": "vivideo_jwtPrivateKey",
-  "db": "vivideoDB"
+  "db": "vivideo_db"
 }
