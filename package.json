@@ -7,6 +7,9 @@
     "test": "jest --watchAll --verbose --coverage --runInBand",
     "start": "node index.js"
   },
+  "engines": {
+    "node": "10.15.3"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ariozone/vivideo-api.git"
