@@ -32,4 +32,4 @@ npm install
 ```
 Run the app
 ```
-nodemon index.js
+node index.js
