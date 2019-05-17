@@ -2,8 +2,17 @@ const { Movie, validate } = require("../models/movie")
 const { Genre } = require("../models/genre")
 const auth = require("../middleware/authorization")
 const express = require("express")
+const cors = require("cors")
 const router = express.Router()
+router.use(cors())
 router.use(express.json())
+
+// Added to avoid CORS errors
+router.all("/", function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "X-Requested-With")
+  next()
+})
 
 router.get("/", async (req, res) => {
   const movies = await Movie.find().sort("name")
@@ -39,18 +48,24 @@ router.put("/:id", auth, async (req, res) => {
   const { error } = validate(req.body)
   if (error) res.status(400).send(error.details[0].message)
 
-  const genre = Genre.findById(req.body.genreId)
+  const genre = await Genre.findById(req.body.genreId)
   if (!genre) res.status(400).send("Genre ID is invalid!")
 
-  const movie = await Movie.findByIdAndUpdate(req.params.id, {
-    title: req.body.title,
-    genre: {
-      _id: genre._id,
-      name: genre.name
+  const movie = await Movie.findByIdAndUpdate(
+    req.params.id,
+    {
+      title: req.body.title,
+      genre: {
+        _id: genre._id,
+        name: genre.name
+      },
+      numberInStock: req.body.numberInStock,
+      dailyRentalRate: req.body.dailyRentalRate
     },
-    numberInStock: req.body.numberInStock,
-    dailyRentalRate: req.body.dailyRentalRate
-  })
+    { new: true }
+  )
+  if (!movie)
+    return res.status(404).send("Movie with the given ID does not exist!")
   res.send(movie)
 })
 

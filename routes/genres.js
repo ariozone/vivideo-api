@@ -8,6 +8,13 @@ const validateObjectId = require("../middleware/validateObjectId")
 const router = express.Router()
 router.use(express.json())
 
+// Added to avoid CORS errors
+router.all("/", function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "X-Requested-With")
+  next()
+})
+
 router.get("/", async (req, res) => {
   // throw new Error("Something is wrong!") // to test
 
