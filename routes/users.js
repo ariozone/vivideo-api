@@ -46,8 +46,8 @@ router.post("/", auth, async (req, res) => {
   // Sending header along with body of the response.
   res
     .header("x-auth-token", token)
-    .send(_.pick(user, ["_id", "name", "email"]))
     .header("access-control-expose-headers", "x-auth-token")
+    .send(_.pick(user, ["_id", "name", "email"]))
 })
 
 module.exports = router
