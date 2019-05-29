@@ -35,7 +35,12 @@ const userSchema = new mongoose.Schema({
 // Not using arrow funtions because this must refer to user object.
 userSchema.methods.generateToken = function() {
   return jwt.sign(
-    { _id: this._id, isAdmin: this.isAdmin },
+    {
+      _id: this._id,
+      name: this.name,
+      email: this.email,
+      isAdmin: this.isAdmin
+    },
     config.get("jwtPrivateKey")
   )
 }
@@ -55,11 +60,12 @@ function validateUser(user) {
       .email(),
     password: Joi.string()
       .required()
-      .min(5)
+      .min(6)
       .max(255)
   }
   return Joi.validate(user, schema)
 }
+
 function validatePassword(password) {
   const complexityOptions = {
     min: 6,
