@@ -1,4 +1,10 @@
+const config = require("config")
+
 module.exports = function(req, res, next) {
-  if (!req.user.isAdmin) return res.status(403).send("Permission Required!")
+  if (!config.get("requiresAuth")) return next()
+
+  if (!req.user.isAdmin)
+    return res.status(403).send("Requires Admin Permissions")
+
   next()
 }
