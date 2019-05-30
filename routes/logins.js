@@ -1,9 +1,9 @@
 const { User } = require("../models/user")
 const express = require("express")
 const router = express.Router()
-const mongoose = require("mongoose")
 const Joi = require("joi")
 const bcrypt = require("bcrypt")
+const auth = require("../middleware/authorization")
 const cors = require("cors")
 router.use(cors())
 
@@ -20,17 +20,18 @@ router.post("/", async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message)
 
   let user = await User.findOne({ email: req.body.email })
-  if (!user) return res.status(400).send("Invalid User!")
+  if (!user) return res.status(400).send("Invalid Username or Password!")
 
   // comparing plain text password with hashed password
   userValidPassword = await bcrypt.compare(req.body.password, user.password)
-  if (!userValidPassword) return res.status(400).send("Invalid Password!")
+  if (!userValidPassword)
+    return res.status(400).send("Invalid Username or Password!")
 
   const token = user.generateToken()
   res.send(token)
 })
 
-function validateLogin(login) {
+function validateLogin(req) {
   const schema = {
     email: Joi.string()
       .min(5)
@@ -42,6 +43,6 @@ function validateLogin(login) {
       .max(255)
       .required()
   }
-  return Joi.validate(login, schema)
+  return Joi.validate(req, schema)
 }
 module.exports = router
