@@ -1,6 +1,6 @@
 {
   "jwtPrivateKey": "key",
   "db": "mongodb://localhost/vivideo",
-  "requiresAuth": false,
+  "requiresAuth": true,
   "port": 3900
 }
