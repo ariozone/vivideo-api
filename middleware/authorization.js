@@ -5,10 +5,12 @@ function auth(req, res, next) {
   if (!config.get("requiresAuth")) return next()
 
   const token = req.header("x-auth-token")
-  if (!token)
+
+  if (!token) {
     return res
       .status(401)
       .send("User is not authorized to access! No token provided.")
+  }
 
   try {
     // Verifying token

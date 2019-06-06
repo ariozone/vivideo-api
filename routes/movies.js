@@ -2,17 +2,8 @@ const { Movie, validate } = require("../models/movie")
 const { Genre } = require("../models/genre")
 const auth = require("../middleware/authorization")
 const express = require("express")
-const cors = require("cors")
 const router = express.Router()
-router.use(cors())
 router.use(express.json())
-
-// Added to avoid CORS errors
-router.all("/", function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*")
-  res.header("Access-Control-Allow-Headers", "X-Requested-With")
-  next()
-})
 
 router.get("/", async (req, res) => {
   const movies = await Movie.find().sort("name")
@@ -44,7 +35,7 @@ router.post("/", auth, async (req, res) => {
   res.send(movie)
 })
 
-router.put("/:id", auth, async (req, res) => {
+router.put("/:id", [auth], async (req, res) => {
   const { error } = validate(req.body)
   if (error) res.status(400).send(error.details[0].message)
 

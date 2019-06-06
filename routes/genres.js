@@ -6,14 +6,8 @@ const { Genre, validate } = require("../models/genre")
 const validateObjectId = require("../middleware/validateObjectId")
 // Using router object instead; Because routes are in seperate modules.
 const router = express.Router()
-router.use(express.json())
 
-// Added to avoid CORS errors
-router.all("/", function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*")
-  res.header("Access-Control-Allow-Headers", "X-Requested-With")
-  next()
-})
+router.use(express.json())
 
 router.get("/", async (req, res) => {
   // throw new Error("Something is wrong!") // to test

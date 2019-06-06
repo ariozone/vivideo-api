@@ -4,15 +4,6 @@ const router = express.Router()
 const Joi = require("joi")
 const bcrypt = require("bcrypt")
 const auth = require("../middleware/authorization")
-const cors = require("cors")
-router.use(cors())
-
-// Added to avoid CORS errors
-router.all("/", function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*")
-  res.header("Access-Control-Allow-Headers", "X-Requested-With")
-  next()
-})
 
 // This is log-in; We log out users by deleting token on client's side.
 router.post("/", async (req, res) => {

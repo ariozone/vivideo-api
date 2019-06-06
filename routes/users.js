@@ -4,15 +4,6 @@ const _ = require("lodash")
 const express = require("express")
 const router = express.Router()
 const auth = require("../middleware/authorization")
-const cors = require("cors")
-router.use(cors())
-
-// Added to avoid CORS errors
-router.all("/", function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*")
-  res.header("Access-Control-Allow-Headers", "X-Requested-With")
-  next()
-})
 
 // Getting the current user
 router.get("/me", auth, async (req, res) => {
