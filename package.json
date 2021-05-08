@@ -34,7 +34,7 @@
     "joi-objectid": "^3.0.1",
     "joi-password-complexity": "^5.0.2",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "mongoose": "^5.11.12",
     "nodemon": "^2.0.7",
